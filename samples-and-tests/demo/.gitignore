@@ -1,0 +1,9 @@
+.classpath
+.project
+.settings
+eclipse
+lib
+modules
+test-results
+tmp
+precompiled

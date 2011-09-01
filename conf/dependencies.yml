@@ -1,0 +1,7 @@
+# Application dependencies
+self: play -> app-base 1.0
+
+require:
+    - play -> betterlogs 1.0
+    - play -> guice 1.2
+    - play -> greenscript 1.2.5

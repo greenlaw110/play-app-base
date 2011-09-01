@@ -1,0 +1,5 @@
+# Application dependencies
+
+require:
+    - play -> app-base 1.0
+    - play -> morphia 1.2.1beta6
