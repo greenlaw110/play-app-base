@@ -1,5 +1,17 @@
 # Application dependencies
 
+# issue: Transitive dependencies not working for modules in local repositories
+
 require:
-    - play -> app-base 1.0
-    - play -> morphia 1.2.1beta6
+    - play -> morphia [1.2.1beta6,)
+    - play-app-base -> play-app-base
+    - play -> betterlogs [1.1,)
+    - play -> guice [1.2,)
+    - play -> greenscript [1.2.6d,)
+    
+repositories:
+    - local:
+        type: local
+        artifact: ${application.path}/../../../[module]
+        contains:
+            - play-app-base

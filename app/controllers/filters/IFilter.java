@@ -13,6 +13,7 @@ public interface IFilter {
     final int FPB_90 = 90;
     final int FPB_100 = 100;
     final int FPB_MAX = FPB_100;
+    final int FPB_APP = 1000;
     
     /*
      * Defining the order of before filters
