@@ -16,9 +16,6 @@ import api.IApplication;
 
 public class UADetector extends Controller implements IFilter {
     
-    @Inject
-    public static IApplication app;
-    
     @Before(priority = FPB_UA_DETECTOR)
     public static void detect() {
         UserAgent ua = probe();

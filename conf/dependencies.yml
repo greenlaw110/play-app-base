@@ -1,8 +1,13 @@
+# version history
+# 1.0.1 - Add FPB_APP to IFilter as the start priority for applications,
+#       - remove "@Inject public static IApplication app;" from UADetector
+# 1.0.0 - intial version
+
 # Application dependencies
-self: play -> app-base 1.0.0
+self: play -> app-base 1.0.1
 
 require:
-    - play [1.2,)
-    - play -> [betterlogs 1.1,)
-    - play -> [guice 1.2,)
-    - play -> greenscript [1.2.6d,)
+    - play 1.2
+    - play -> betterlogs [1.1,)
+    - play -> guice [1.2,)
+    - play -> greenscript [1.2.6f,)
