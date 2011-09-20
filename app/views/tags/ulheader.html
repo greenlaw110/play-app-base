@@ -1,0 +1,25 @@
+%{
+    ( _arg ) &&  ( _cols = _arg);
+
+    if(! _cols) {
+        throw new play.exceptions.TagInternalException("cols attribute cannot be empty for select tag");
+    }
+    
+    _cols = _cols.split("\\|")
+}%
+<ul class="header row ${_className}">
+#{list items: _cols}
+%{
+  def cm = utils.ColumnMeta.valueOf(_)
+}%
+<li ${cm.classStr} ${cm.titleStr}>
+  <span style="display:block;float:left">${cm.content}</span>
+  #{if cm.sortable}
+  <div class="sort" style="display:block;float:right;margin-top:1px">
+    <button class="sortAZ" data-bind="click: function(){b.ui.pager.sortAZ('${cm.field}')}"></button>
+    <button class="sortZA" data-bind="click: function(){b.ui.pager.sortZA('${cm.field}')}"></button>
+  </div>
+  #{/if}
+</li>
+#{/list}
+</ul>
