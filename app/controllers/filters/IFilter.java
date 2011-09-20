@@ -20,6 +20,7 @@ public interface IFilter {
      */
     final int FPB_DEFAULT = FPB_50;
     final int FPB_CONFIG_10 = FPB_10;
+    final int FPB_REGION = FPB_10 + 5;
     final int FPB_UA_DETECTOR = FPB_20;
     final int FPB_CONFIG_100 = FPB_100;
     

@@ -12,7 +12,6 @@ import java.net.URLEncoder;
 import java.util.Collection;
 import java.util.Iterator;
 
-import play.Logger;
 import play.exceptions.UnexpectedException;
 import play.libs.Codec;
 import play.modules.betterlogs.NoTrace;

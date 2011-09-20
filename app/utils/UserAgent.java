@@ -1,7 +1,8 @@
 package utils;
 
-import java.util.BitSet;
 import java.util.regex.Pattern;
+
+import controllers.filters.UADetector;
 
 public class UserAgent {
     
@@ -107,20 +108,20 @@ public class UserAgent {
         }
     }
     
-    public static final ThreadLocal<UserAgent> cur_ = new ThreadLocal<UserAgent>();
+    public static final String KEY = "__ua__";
     public static final UserAgent current() {
         return get();
     }
     public static final UserAgent get() {
-        return cur_.get();
+        return UADetector.current();
     }
     public static final UserAgent set(String userAgent) {
         UserAgent ua = new UserAgent(userAgent);
-        cur_.set(ua);
+        UADetector.current(ua);
         return ua;
     }
     public static final void reset() {
-        cur_.remove();
+        UADetector.current(null);
     }
     
     public static void main(String[] args) {

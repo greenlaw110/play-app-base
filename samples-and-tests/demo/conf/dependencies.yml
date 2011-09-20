@@ -3,7 +3,7 @@
 # issue: Transitive dependencies not working for modules in local repositories
 
 require:
-    - play -> morphia [1.2.1beta6,)
+    - play -> morphia [1.2.3beta1,)
     - play-app-base -> play-app-base
     - play -> betterlogs [1.1,)
     - play -> guice [1.2,)

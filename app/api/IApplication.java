@@ -1,6 +1,5 @@
 package api;
 
-import play.db.Model;
 
 public interface IApplication {
     /**

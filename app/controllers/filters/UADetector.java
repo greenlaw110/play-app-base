@@ -1,8 +1,6 @@
 package controllers.filters;
 
 
-import javax.inject.Inject;
-
 import play.Logger;
 import play.classloading.enhancers.ControllersEnhancer.ByPass;
 import play.jobs.Job;
@@ -12,14 +10,15 @@ import play.mvc.Controller;
 import play.mvc.Finally;
 import play.mvc.Http.Header;
 import utils.UserAgent;
-import api.IApplication;
 
 public class UADetector extends Controller implements IFilter {
+
+    public static final String KEY = "__ua__";
     
     @Before(priority = FPB_UA_DETECTOR)
     public static void detect() {
         UserAgent ua = probe();
-        renderArgs.put("ua", ua);
+        renderArgs.put(KEY, ua);
     }
     
     @Finally(priority = FPF_UA_DETECTOR)
@@ -35,12 +34,24 @@ public class UADetector extends Controller implements IFilter {
         return UserAgent.set(userAgent);
     }
     
+    @ByPass
     public static UserAgent get() {
-        UserAgent ua = UserAgent.get();
+        UserAgent ua = current();
         if (null == ua) ua = probe();
         return ua;
     }
     
+    @ByPass
+    public static UserAgent current() {
+        return (UserAgent)request.args.get(KEY);
+    }
+    
+    @ByPass
+    public static void current(UserAgent ua) {
+        request.args.put(KEY, ua);
+    }
+    
+    @ByPass
     public static boolean isMobile() {
         return get().isMobile();
     }

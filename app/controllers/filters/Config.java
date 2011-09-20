@@ -28,7 +28,6 @@ public class Config extends Controller implements IFilter {
     public static boolean postSsl;
     public static String postScheme;
     public static String domain;
-    public static String context;
     public static String homeUrl; // equals to protocol://homePath
     public static String homePath;
 
@@ -61,10 +60,8 @@ public class Config extends Controller implements IFilter {
             postScheme = postSsl ? "https" : "http";
             domain = c.getProperty("app.domain");
             //errorIfNull_("app.domain", domain);
-            context = c.getProperty("app.context", "");
-            //errorIfNull_("app.context", context);
             homePath = Play.configuration.getProperty("app.homepath",
-                    String.format("%s%s", domain, context));
+                    String.format("%s%s", domain, Play.ctxPath));
             //errorIfNull_("app.homepath", homePath);
             if (homePath.endsWith("/"))
                 homePath = homePath.substring(0, homePath.length() - 1);
@@ -86,13 +83,13 @@ public class Config extends Controller implements IFilter {
     @Before(priority = FPB_CONFIG_10)
     public static void addBindings() {
         RenderArgs r = renderArgs;
-        r.put("context", context);
-        r.put("domain", domain);
-        r.put("homePath", homePath);
-        r.put("homeUrl", homeUrl);
-        r.put("scheme", scheme);
-        r.put("postScheme", postScheme);
-        r.put("string", utils.S.instance);
+        r.put("_ctxPath", Play.ctxPath);
+        r.put("_domain", domain);
+        r.put("_homePath", homePath);
+        r.put("_homeUrl", homeUrl);
+        r.put("_scheme", scheme);
+        r.put("_postScheme", postScheme);
+        r.put("_S", utils.S.instance);
     }
     
     @Before(priority = FPB_CONFIG_100)

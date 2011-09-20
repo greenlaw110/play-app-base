@@ -19,8 +19,8 @@ import play.modules.betterlogs.NoTrace;
 import play.templates.GroovyTemplate.ExecutableTemplate;
 import play.templates.JavaExtensions;
 import utils.FeatureAccess;
-import utils.S;
 import utils.FeatureAccess.Role;
+import utils.S;
 
 @play.templates.FastTags.Namespace("app")
 @NoTrace
