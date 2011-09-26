@@ -7,6 +7,9 @@
  */
 package utils;
 
+import play.modules.betterlogs.NoTrace;
+
+@NoTrace
 public class _ {
     /**
      * Defines an instance to be used in views

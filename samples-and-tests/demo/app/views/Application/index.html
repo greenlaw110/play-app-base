@@ -1,4 +1,19 @@
 #{extends 'main.html' /}
 #{set title:'Home' /}
 
-#{welcome /}
+<h1>Demo</h1>
+
+<h2>Configuration</h2>
+
+<dl>
+<dt>app.name</dt>
+<dd>${appconfig.name}</dd>
+<dt>app.bar.conf1</dt>
+<dd>${appconf.bar.conf1}</dd>
+<dt>app.bar.conf2</dt>
+<dd>${conf.AppConfig.bar.conf2}</dd>
+<dt>app.bar.foo.done</dt>
+<dd>${conf.AppConfig.bar.foo.done}</dd>
+<dt>app.bar.foo.id</dt>
+<dd>${conf.AppConfig.bar.foo.id}</dd>
+</dl>

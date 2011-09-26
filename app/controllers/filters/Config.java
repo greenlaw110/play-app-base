@@ -8,11 +8,24 @@
 
 package controllers.filters;
 
+import java.lang.annotation.Documented;
+import java.lang.annotation.Inherited;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
+import java.lang.reflect.Field;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.Properties;
+
+import javassist.Modifier;
 
 import javax.inject.Inject;
 
+import play.Logger;
 import play.Play;
+import play.exceptions.ConfigurationException;
 import play.jobs.Job;
 import play.jobs.OnApplicationStart;
 import play.mvc.Before;
@@ -22,11 +35,66 @@ import api.IApplication;
 import api.IUser;
 
 public class Config extends Controller implements IFilter {
+    
+    @Documented
+    @Inherited
+    @Retention(RetentionPolicy.RUNTIME)
+    @Target(java.lang.annotation.ElementType.TYPE)
+    public static @interface AutoConfig {
+        /*
+         * define namespace of the configuration
+         */
+        String value() default "app";
+    }
+    
+    public static int getIntConf(String key, int def) {
+        String s = Play.configuration.getProperty(key);
+        if (null == s) return def;
+        try {
+            return Integer.parseInt(s);
+        } catch (Exception e) {
+            throw new ConfigurationException("error get integer config " + key + ": " + e.getMessage());
+        }
+    }
+    
+    public static long getLongConf(String key, long def) {
+        String s = Play.configuration.getProperty(key);
+        if (null == s) return def;
+        try {
+            return Long.parseLong(s);
+        } catch (Exception e) {
+            throw new ConfigurationException("error get long config " + key + ": " + e.getMessage());
+        }
+    }
+    
+    public static float getFloatConf(String key, float def) {
+        String s = Play.configuration.getProperty(key);
+        if (null == s) return def;
+        try {
+            return Float.parseFloat(s);
+        } catch (Exception e) {
+            throw new ConfigurationException("error get float config " + key + ": " + e.getMessage());
+        }
+    }
+    
+    public static boolean getBoolConf(String key, boolean def) {
+        String s = Play.configuration.getProperty(key);
+        if (null == s) return def;
+        try {
+            return Boolean.parseBoolean(s);
+        } catch (Exception e) {
+            throw new ConfigurationException("error get boolean config " + key + ": " + e.getMessage());
+        }
+    }
+    
+    public static String getStringConf(String key, String def) {
+        return Play.configuration.getProperty(key, def);
+    }
 
-    public static boolean ssl;
-    public static String scheme;
-    public static boolean postSsl;
-    public static String postScheme;
+    public static boolean ssl = false;
+    public static String scheme = "http";
+    public static boolean postSsl = true;
+    public static String postScheme = "https";
     public static String domain;
     public static String homeUrl; // equals to protocol://homePath
     public static String homePath;
@@ -77,6 +145,63 @@ public class Config extends Controller implements IFilter {
                 developers = Play.configuration.getProperty("app.developers",
                         "");
             }
+            
+            loadAutoConfigs_();
+        }
+    }
+    
+    private static void loadAutoConfigs_() {
+        List<Class> cl = Play.classloader.getAnnotatedClasses(AutoConfig.class);
+        for (Class c: cl) {
+            loadAutoConfigs_(c, ((AutoConfig)c.getAnnotation(AutoConfig.class)).value());
+        }
+    }
+    
+    private static void loadAutoConfigs_(Class c, String ns) {
+        Logger.debug("loading auto config for %s", c);
+        Class[] ca = c.getClasses();
+        for (Class c0: ca) {
+            int mod = c0.getModifiers();
+            if (Modifier.isStatic(mod)) {
+                loadAutoConfigs_(c0, ns + "." + c0.getSimpleName());
+            }
+        }
+        Field[] fa = c.getFields();
+        for (Field f: fa) {
+            if (Modifier.isStatic(f.getModifiers())) {
+                loadAutoConfig_(f, ns);
+            }
+        }
+    }
+    
+    private static void loadAutoConfig_(Field f, String ns) {
+        String key = ns + "." + f.getName();
+        try {
+            String s = Play.configuration.getProperty(key);
+            if (null != s) {
+                //f.setAccessible(true);
+                Class<?> type = f.getType();
+                if (String.class.equals(type)) {
+                    f.set(null, s);
+                } else if (Integer.TYPE.equals(type)) {
+                    f.set(null, Integer.parseInt(s));
+                } else if (Boolean.TYPE.equals(type)) {
+                    f.set(null, Boolean.parseBoolean(s));
+                } else if (Long.TYPE.equals(type)) {
+                    f.set(null, Long.parseLong(s));
+                } else if (Float.TYPE.equals(type)) {
+                    f.set(null, Float.parseFloat(s));
+                } else {
+                    Logger.warn("Config[%s] field type[%s] not recognized", key, type);
+                }
+            }
+            
+            if (null == f.get(null)) {
+                Logger.warn("Config[%s] not initialized", key);
+            }
+            
+        } catch (Exception e) {
+            throw new ConfigurationException("Error get configuration " + key + ": " + e.getMessage());
         }
     }
 

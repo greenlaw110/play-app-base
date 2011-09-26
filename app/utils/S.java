@@ -259,5 +259,10 @@ public class S {
             return s;
         }
     }
+    
+    public static String fileExtension(String fileName) {
+        int mid= fileName.lastIndexOf(".");
+        return fileName.substring(mid+1, fileName.length()); 
+    }
 
 }

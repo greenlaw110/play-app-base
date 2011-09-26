@@ -1,5 +1,7 @@
 package utils;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.regex.Pattern;
 
 import controllers.filters.UADetector;
@@ -49,15 +51,25 @@ public class UserAgent {
     
     private String str_;
     
+    @Override
     public final String toString() {
         return str_;
+    }
+    
+    private static Map<String, UserAgent> cache_ = new HashMap<String, UserAgent>();
+    public static UserAgent parse(String userAgent) {
+        UserAgent ua = cache_.get(userAgent);
+        if (null != ua) return ua;
+        ua = new UserAgent(userAgent);
+        cache_.put(userAgent, ua);
+        return ua;
     }
     
     /**
      * Construct the instance from http header: user-agent
      * @param userAgent
      */
-    public UserAgent(String userAgent) {
+    private UserAgent(String userAgent) {
         parse_(userAgent);
         str_ = userAgent;
     }
@@ -116,7 +128,7 @@ public class UserAgent {
         return UADetector.current();
     }
     public static final UserAgent set(String userAgent) {
-        UserAgent ua = new UserAgent(userAgent);
+        UserAgent ua = UserAgent.parse(userAgent);
         UADetector.current(ua);
         return ua;
     }

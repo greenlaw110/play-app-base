@@ -3,6 +3,9 @@ package utils;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import play.modules.betterlogs.NoTrace;
+
+@NoTrace
 public class ColumnMeta {
 	public String content;
 	public String className;

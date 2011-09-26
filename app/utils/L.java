@@ -11,6 +11,9 @@ import java.util.Collection;
 import java.util.Set;
 import java.util.TreeSet;
 
+import play.modules.betterlogs.NoTrace;
+
+@NoTrace
 public class L {
     /**
      * Return true if the object specified can be used in for (T e: o)
