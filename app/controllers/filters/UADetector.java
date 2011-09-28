@@ -5,6 +5,7 @@ import play.Logger;
 import play.classloading.enhancers.ControllersEnhancer.ByPass;
 import play.jobs.Job;
 import play.jobs.OnApplicationStart;
+import play.modules.betterlogs.NoTrace;
 import play.mvc.Before;
 import play.mvc.Controller;
 import play.mvc.Finally;
@@ -35,6 +36,7 @@ public class UADetector extends Controller implements IFilter {
     }
     
     @ByPass
+    @NoTrace
     public static UserAgent get() {
         UserAgent ua = current();
         if (null == ua) ua = probe();
@@ -42,6 +44,7 @@ public class UADetector extends Controller implements IFilter {
     }
     
     @ByPass
+    @NoTrace
     public static UserAgent current() {
         return (UserAgent)request.args.get(KEY);
     }
@@ -52,11 +55,13 @@ public class UADetector extends Controller implements IFilter {
     }
     
     @ByPass
+    @NoTrace
     public static boolean isMobile() {
         return get().isMobile();
     }
 
     @ByPass
+    @NoTrace
     public static void mobileOnly() {
         if (!isMobile()) notFound();
     }
