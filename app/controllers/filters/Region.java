@@ -8,6 +8,7 @@ import play.Play;
 import play.classloading.enhancers.ControllersEnhancer.ByPass;
 import play.jobs.Job;
 import play.jobs.OnApplicationStart;
+import play.modules.betterlogs.NoTrace;
 import play.mvc.Before;
 import play.mvc.Controller;
 
@@ -28,7 +29,9 @@ public class Region extends Controller implements IFilter{
         return region;
     }
     
+    @NoTrace
     public static String current() {return get();}
+    @NoTrace
     public static String get() {return (String)request.args.get(KEY);}
 
     @ByPass

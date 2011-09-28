@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.regex.Pattern;
 
+import play.modules.betterlogs.NoTrace;
 import controllers.filters.UADetector;
 
 public class UserAgent {
@@ -18,15 +19,19 @@ public class UserAgent {
         private Device (int id) {
             id_ = id;
         }
+        
+        @NoTrace
         public int id() {
             return id_;
         }
     }
     private int device_ = 0;
+    @NoTrace
     public final boolean is(Device device) {
         return (device_ & device.id()) != 0;
     }
     
+    @NoTrace
     public final boolean isMobile() {
         final Device[] da = {
             Device.IPHONE,
@@ -45,6 +50,7 @@ public class UserAgent {
     }
     
     private Browser browser_ = Browser.UNKNOWN;
+    @NoTrace
     public final Browser getBrowser() {
         return browser_;
     }
@@ -52,6 +58,7 @@ public class UserAgent {
     private String str_;
     
     @Override
+    @NoTrace
     public final String toString() {
         return str_;
     }
@@ -98,9 +105,11 @@ public class UserAgent {
             d_ = device;
             b_ = browser;
         }
+        @NoTrace
         boolean matches(String ua) {
             return p_.matcher(ua).matches();
         }
+        @NoTrace
         void test(String str, UserAgent ua) {
             if (matches(str)) {
                 if (null != d_) {
@@ -121,9 +130,12 @@ public class UserAgent {
     }
     
     public static final String KEY = "__ua__";
+    @NoTrace
     public static final UserAgent current() {
         return get();
     }
+    
+    @NoTrace
     public static final UserAgent get() {
         return UADetector.current();
     }

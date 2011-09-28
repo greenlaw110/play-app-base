@@ -14,9 +14,7 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 import java.lang.reflect.Field;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Properties;
 
 import javassist.Modifier;
@@ -28,6 +26,7 @@ import play.Play;
 import play.exceptions.ConfigurationException;
 import play.jobs.Job;
 import play.jobs.OnApplicationStart;
+import play.modules.betterlogs.NoTrace;
 import play.mvc.Before;
 import play.mvc.Controller;
 import play.mvc.Scope.RenderArgs;
@@ -47,6 +46,7 @@ public class Config extends Controller implements IFilter {
         String value() default "app";
     }
     
+    @NoTrace
     public static int getIntConf(String key, int def) {
         String s = Play.configuration.getProperty(key);
         if (null == s) return def;
@@ -57,6 +57,7 @@ public class Config extends Controller implements IFilter {
         }
     }
     
+    @NoTrace
     public static long getLongConf(String key, long def) {
         String s = Play.configuration.getProperty(key);
         if (null == s) return def;
@@ -67,6 +68,7 @@ public class Config extends Controller implements IFilter {
         }
     }
     
+    @NoTrace
     public static float getFloatConf(String key, float def) {
         String s = Play.configuration.getProperty(key);
         if (null == s) return def;
@@ -77,6 +79,7 @@ public class Config extends Controller implements IFilter {
         }
     }
     
+    @NoTrace
     public static boolean getBoolConf(String key, boolean def) {
         String s = Play.configuration.getProperty(key);
         if (null == s) return def;
@@ -87,6 +90,7 @@ public class Config extends Controller implements IFilter {
         }
     }
     
+    @NoTrace
     public static String getStringConf(String key, String def) {
         return Play.configuration.getProperty(key, def);
     }
@@ -157,6 +161,7 @@ public class Config extends Controller implements IFilter {
         }
     }
     
+    @NoTrace
     private static void loadAutoConfigs_(Class c, String ns) {
         Logger.debug("loading auto config for %s", c);
         Class[] ca = c.getClasses();
@@ -174,6 +179,7 @@ public class Config extends Controller implements IFilter {
         }
     }
     
+    @NoTrace
     private static void loadAutoConfig_(Field f, String ns) {
         String key = ns + "." + f.getName();
         try {
