@@ -16,10 +16,12 @@ public class Region extends Controller implements IFilter{
     
     public static final String KEY = "__region__";
     
+    @NoTrace
     public static String getDefaultRegion() {
         return Play.configuration.getProperty("app.region.default", "AU");
     }
     
+    @NoTrace
     private static String getRegion_() {
         String region = params.get(Play.configuration.getProperty("app.region.param.name", "region"));
         if (null == region) region = session.get(KEY);
