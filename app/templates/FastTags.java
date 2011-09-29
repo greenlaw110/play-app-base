@@ -51,4 +51,34 @@ public class FastTags extends play.templates.FastTags {
             out.print(JavaExtensions.toString(body));
         }
     }
+    
+    protected static Object getObj(Map<?, ?> args, String key, Object def) {
+        Object arg = args.get(key);
+        return null == arg ? def : arg;
+    }
+    
+    protected static String getStr(Map<?, ?> args, String key, String def) {
+        Object arg = args.get(key);
+        return null == arg ? def : arg.toString(); 
+    }
+
+    protected static boolean getBool(Map<?, ?> args, String key, boolean def) {
+        Object arg = args.get(key);
+        if (arg instanceof Boolean) {
+            return (Boolean)arg;
+        } else if (null != arg) {
+            return Boolean.valueOf(arg.toString());
+        }
+        return def;
+    }
+
+    protected static int getInt(Map<?, ?> args, String key, int def) {
+        Object arg = args.get(key);
+        if (arg instanceof Integer) {
+            return (Integer)arg;
+        } else if (null != arg) {
+            return Integer.valueOf(arg.toString());
+        }
+        return def;
+    }
 }
