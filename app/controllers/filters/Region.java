@@ -39,7 +39,7 @@ public class Region extends Controller implements IFilter{
     @ByPass
     public static void current(String region){
         request.args.put(KEY, region);
-        renderArgs.current().put(KEY, region);
+        renderArgs.put(KEY, region);
         session.put(KEY, region);
     }
     
@@ -48,6 +48,12 @@ public class Region extends Controller implements IFilter{
     	String region = getRegion_();
         region = region.toUpperCase();
     	current(region);
+    }
+    
+    public static void clear() {
+        request.args.remove(KEY);
+        session.remove(KEY);
+        renderArgs.put(KEY, null);
     }
     
     public static final String CONF_KEY = "app.regions";
