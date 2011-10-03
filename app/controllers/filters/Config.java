@@ -35,17 +35,6 @@ import api.IUser;
 
 public class Config extends Controller implements IFilter {
     
-    @Documented
-    @Inherited
-    @Retention(RetentionPolicy.RUNTIME)
-    @Target(java.lang.annotation.ElementType.TYPE)
-    public static @interface AutoConfig {
-        /*
-         * define namespace of the configuration
-         */
-        String value() default "app";
-    }
-    
     @NoTrace
     public static int getIntConf(String key, int def) {
         String s = Play.configuration.getProperty(key);
@@ -150,67 +139,9 @@ public class Config extends Controller implements IFilter {
                         "");
             }
             
-            loadAutoConfigs_();
         }
     }
     
-    private static void loadAutoConfigs_() {
-        List<Class> cl = Play.classloader.getAnnotatedClasses(AutoConfig.class);
-        for (Class c: cl) {
-            loadAutoConfigs_(c, ((AutoConfig)c.getAnnotation(AutoConfig.class)).value());
-        }
-    }
-    
-    @NoTrace
-    private static void loadAutoConfigs_(Class c, String ns) {
-        Logger.debug("loading auto config for %s", c);
-        Class[] ca = c.getClasses();
-        for (Class c0: ca) {
-            int mod = c0.getModifiers();
-            if (Modifier.isStatic(mod)) {
-                loadAutoConfigs_(c0, ns + "." + c0.getSimpleName());
-            }
-        }
-        Field[] fa = c.getFields();
-        for (Field f: fa) {
-            if (Modifier.isStatic(f.getModifiers())) {
-                loadAutoConfig_(f, ns);
-            }
-        }
-    }
-    
-    @NoTrace
-    private static void loadAutoConfig_(Field f, String ns) {
-        String key = ns + "." + f.getName();
-        try {
-            String s = Play.configuration.getProperty(key);
-            if (null != s) {
-                //f.setAccessible(true);
-                Class<?> type = f.getType();
-                if (String.class.equals(type)) {
-                    f.set(null, s);
-                } else if (Integer.TYPE.equals(type)) {
-                    f.set(null, Integer.parseInt(s));
-                } else if (Boolean.TYPE.equals(type)) {
-                    f.set(null, Boolean.parseBoolean(s));
-                } else if (Long.TYPE.equals(type)) {
-                    f.set(null, Long.parseLong(s));
-                } else if (Float.TYPE.equals(type)) {
-                    f.set(null, Float.parseFloat(s));
-                } else {
-                    Logger.warn("Config[%s] field type[%s] not recognized", key, type);
-                }
-            }
-            
-            if (null == f.get(null)) {
-                Logger.warn("Config[%s] not initialized", key);
-            }
-            
-        } catch (Exception e) {
-            throw new ConfigurationException("Error get configuration " + key + ": " + e.getMessage());
-        }
-    }
-
     @Before(priority = FPB_CONFIG_10)
     public static void addBindings() {
         RenderArgs r = renderArgs;

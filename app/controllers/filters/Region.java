@@ -18,7 +18,7 @@ public class Region extends Controller implements IFilter{
     
     @NoTrace
     public static String getDefaultRegion() {
-        return Play.configuration.getProperty("app.region.default", "AU");
+        return Play.configuration.getProperty("app.region.default", "AU").toUpperCase().intern();
     }
     
     @NoTrace
@@ -26,9 +26,9 @@ public class Region extends Controller implements IFilter{
         String region = params.get(Play.configuration.getProperty("app.region.param.name", "region"));
         if (null == region) region = session.get(KEY);
         if (null == region) {
-            region = getDefaultRegion(); // default region
+            return getDefaultRegion(); // default region
         }
-        return region;
+        return region.toUpperCase().intern();
     }
     
     @NoTrace
@@ -46,7 +46,6 @@ public class Region extends Controller implements IFilter{
     @Before(priority = FPB_REGION)
     public static void resolveFromRequest() {
     	String region = getRegion_();
-        region = region.toUpperCase();
     	current(region);
     }
     
