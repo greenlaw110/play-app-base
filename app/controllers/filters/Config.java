@@ -16,6 +16,7 @@ import java.lang.annotation.Target;
 import java.lang.reflect.Field;
 import java.util.List;
 import java.util.Properties;
+import java.util.regex.Pattern;
 
 import javassist.Modifier;
 
@@ -152,6 +153,7 @@ public class Config extends Controller implements IFilter {
         r.put("_scheme", scheme);
         r.put("_postScheme", postScheme);
         r.put("_S", utils.S.instance);
+        r.put("_urlResolver", UrlResolver.instance);
     }
     
     @Before(priority = FPB_CONFIG_100)
@@ -160,6 +162,55 @@ public class Config extends Controller implements IFilter {
         IUser me = app.currentUser();
         if (null == me) return;
         renderArgs.put("debug", developers.indexOf(me.getId().toString()) != -1);
+    }
+    
+    public static class UrlResolver {
+        
+        public static UrlResolver instance = new UrlResolver();
+        
+        private static Pattern p1 = Pattern.compile("(https?:)?//.*");
+        private static Pattern p2 = null;
+        private static Pattern p2() {
+            if (null == p2) p2 = Pattern.compile("(http?:)?//" + Config.domain + ".*");
+            return p2;
+        }
+        private static String s = null;
+        private static String s() {
+            if (null == s) s = new StringBuilder("//").append(Config.domain).append("/").toString();
+            return s;
+        }
+        
+        public static String fullUrl(String url) {
+            if (p1.matcher(url).matches() && ! p2().matcher(url).matches()) {
+                return url.replaceFirst("(https?:)?//.*?/", s());
+            } else {
+                return "//" + Config.domain + (url.startsWith("/") ? url : "/" + url);
+            }
+        }
+        
+        public static void main(String[] sa) {
+            Config.domain = "simspets.apps2.pixolut.com";
+            String s1 = "https://127.0.0.1:20004/pet/000001";
+            String s2 = "http://127.0.0.1:20004/pet/000001";
+            String s3 = "//127.0.0.1:20004/pet/000001";
+            String s4 = "/pet/000001";
+            String s5 = "pet/000001";
+            
+            String url = "//simspets.apps2.pixolut.com/pet/000001";
+            test(s1, url);
+            test(s2, url);
+            test(s3, url);
+            test(s4, url);
+            test(s5, url);
+        }
+        
+        public static void test(String url, String result) {
+            if (!result.equals(fullUrl(url))) {
+                System.out.println("fail: " + url + ", " + fullUrl(url));
+            } else {
+                System.out.println("pass");
+            }
+        }
     }
 
 }
