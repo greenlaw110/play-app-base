@@ -45,14 +45,46 @@ public class UserAgent {
     }
     
     public static enum Browser {
-        IE_6, IE_7, IE_8, IE_9, IE_10, 
-        CHROME, SAFARI, FIREFOX, OPERA, UNKNOWN
+        IE_6, IE_7, IE_8, IE_9, IE_10,
+        CHROME, SAFARI, FIREFOX_3, FIREFOX, OPERA, UNKNOWN
     }
     
     private Browser browser_ = Browser.UNKNOWN;
     @NoTrace
     public final Browser getBrowser() {
         return browser_;
+    }
+    
+    @NoTrace
+    public final boolean isIE678() {
+        Browser b = browser_;
+        return Browser.IE_6 == b || Browser.IE_7 == b || Browser.IE_8 == b;
+    }
+    
+    @NoTrace
+    public final boolean isIE9Up() {
+        Browser b = browser_;
+        return Browser.IE_9 == b || Browser.IE_10 == b;
+    }
+    
+    @NoTrace
+    public final boolean isIE() {
+        return browser_.name().contains("IE");
+    }
+    
+    @NoTrace
+    public final boolean isFirefox3() {
+        return browser_ == Browser.FIREFOX_3;
+    }
+    
+    @NoTrace
+    public final boolean isFirefox4Up() {
+        return browser_ == Browser.FIREFOX && browser_ != Browser.FIREFOX_3;
+    }
+    
+    @NoTrace
+    public final boolean isFirefox() {
+        return browser_.name().contains("FIREFOX");
     }
     
     private String str_;
@@ -93,7 +125,8 @@ public class UserAgent {
         IE9(Pattern.compile(".*MSIE\\s+(9)\\.0.*"), null, Browser.IE_9),
         IE10(Pattern.compile(".*MSIE\\s+(10|11|12)\\.0.*"), null, Browser.IE_10),
         FIREFOX(Pattern.compile(".*Firefox.*"), null, Browser.FIREFOX),
-        Safari(Pattern.compile(".*Safari.*"), null, Browser.SAFARI),
+        FIREFOX3(Pattern.compile(".*Firefox/3.*"), null, Browser.FIREFOX_3),
+        SAFARI(Pattern.compile(".*Safari.*"), null, Browser.SAFARI),
         CHROME(Pattern.compile(".*Chrome.*"), null, Browser.CHROME),
         OPERA(Pattern.compile(".*Opera.*"), null, Browser.OPERA);
         
@@ -141,7 +174,7 @@ public class UserAgent {
     }
     public static final UserAgent set(String userAgent) {
         UserAgent ua = UserAgent.parse(userAgent);
-        UADetector.current(ua);
+        //UADetector.current(ua);
         return ua;
     }
     public static final void reset() {
@@ -162,6 +195,10 @@ public class UserAgent {
         ua = set(s);
         assert_(ua.is(Device.DROID), "2");
         assert_(ua.getBrowser() == Browser.SAFARI, "3");
+        
+        s = "Mozilla/5.0 (X11; U; Linux x86_64; fr; rv:1.9.2.3) Gecko/20100403 Fedora/3.6.3-4.fc13 Firefox/3.6.3";
+        ua = set(s);
+        assert_(ua.isFirefox3(), "firefox 3");
         
         System.out.println("success!");
     }
