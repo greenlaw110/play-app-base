@@ -86,9 +86,9 @@ public class Config extends Controller implements IFilter {
     }
 
     public static boolean ssl = false;
-    public static String scheme = "http";
+    public static String scheme = null;
     public static boolean postSsl = true;
-    public static String postScheme = "https";
+    public static String postScheme = null;
     public static String domain;
     public static String homeUrl; // equals to protocol://homePath
     public static String homePath;
