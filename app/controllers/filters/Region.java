@@ -68,7 +68,7 @@ public class Region extends Controller implements IFilter{
             String def = getDefaultRegion();
             String regions = Play.configuration.getProperty(CONF_KEY, def);
             Set<String> s = new HashSet<String>(); 
-            s.addAll(Arrays.asList(regions.split("[,;\\s]")));
+            s.addAll(Arrays.asList(regions.toUpperCase().split("[,;\\s]")));
             s.add(def);
             regions_ = s.toArray(new String[]{});
         }

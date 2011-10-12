@@ -36,6 +36,14 @@ public class _ {
         if (null == o) throw new NullPointerException();
     }
     
+    public final static void illegalState() {
+        throw new IllegalStateException();
+    }
+    
+    public final static void illegalState(String message) {
+        throw new IllegalStateException(message);
+    }
+    
     public final static String str(Object o, boolean quoted) {
         return S.str(o, quoted);
     }
