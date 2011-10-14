@@ -2,6 +2,7 @@ package controllers.filters;
 
 
 import play.Logger;
+import play.Play;
 import play.classloading.enhancers.ControllersEnhancer.ByPass;
 import play.jobs.Job;
 import play.jobs.OnApplicationStart;
@@ -74,7 +75,11 @@ public class UADetector extends Controller implements IFilter {
             Controller.registerTemplateNameResolver(new ITemplateNameResolver(){
                 @Override
                 public String resolveTemplateName(String templateName) {
-                    return isMobile() ? "mobile/" + templateName : templateName;
+                    if (Boolean.parseBoolean(Play.configuration.getProperty("app.mobileSupport", "false"))) {
+                        return isMobile() ? "mobile/" + templateName : templateName;
+                    } else {
+                        return templateName;
+                    }
                 }
             });
         }
