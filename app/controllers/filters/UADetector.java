@@ -33,7 +33,7 @@ public class UADetector extends Controller implements IFilter {
         Header h = request.headers.get("user-agent");
         String userAgent = (null == h) ? null : h.value();
         Logger.trace("user agent: %s", userAgent);
-        return UserAgent.set(userAgent);
+        return UserAgent.valueOf(userAgent);
     }
     
     @ByPass

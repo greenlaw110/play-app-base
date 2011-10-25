@@ -172,10 +172,17 @@ public class UserAgent {
     public static final UserAgent get() {
         return UADetector.current();
     }
+    /**
+     * Use valueOf instead
+     * @param userAgent
+     * @return
+     */
+    @Deprecated
     public static final UserAgent set(String userAgent) {
-        UserAgent ua = UserAgent.parse(userAgent);
-        //UADetector.current(ua);
-        return ua;
+        return valueOf(userAgent);
+    }
+    public static final UserAgent valueOf(String userAgent) {
+        return UserAgent.parse(userAgent);
     }
     public static final void reset() {
         UADetector.current(null);
