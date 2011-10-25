@@ -20,7 +20,7 @@ public class UADetector extends Controller implements IFilter {
     @Before(priority = FPB_UA_DETECTOR)
     public static void detect() {
         UserAgent ua = probe();
-        renderArgs.put(KEY, ua);
+        current(ua);
     }
     
     @Finally(priority = FPF_UA_DETECTOR)
@@ -53,6 +53,7 @@ public class UADetector extends Controller implements IFilter {
     @ByPass
     public static void current(UserAgent ua) {
         request.args.put(KEY, ua);
+        renderArgs.put(KEY, ua);
     }
     
     @ByPass
