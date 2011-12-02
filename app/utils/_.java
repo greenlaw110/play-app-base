@@ -51,4 +51,8 @@ public class _ {
     public final static String str(Object o) {
         return S.str(o, false);
     }
+    
+    public final static int hashCode(Object property, int hashCode) {
+        return 31 * hashCode + ((null == property) ? 0 : property.hashCode());
+    }
 }
