@@ -20,20 +20,11 @@ public class _ {
      * Throw out NullPointerException if passed object is null
      * 
      * @param o the object instance to be tested
-     * @param msg the error message
      */
-    public final static void NPE(Object o, String msg) {
-        if (null == o)
-            throw new NullPointerException(msg);
-    }
-    
-    /**
-     * Throw out NullPointerException if passed object is null
-     * 
-     * @param o the object instance to be tested
-     */
-    public final static void NPE(Object o) {
-        if (null == o) throw new NullPointerException();
+    public final static void NPE(Object... args) {
+        for (Object o: args) {
+            if (null == args) throw new NullPointerException();
+        }
     }
     
     public final static void illegalState() {
