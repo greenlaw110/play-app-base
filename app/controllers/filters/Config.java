@@ -33,6 +33,7 @@ import play.mvc.Controller;
 import play.mvc.Scope.RenderArgs;
 import api.IApplication;
 import api.IUser;
+import utils.S;
 
 public class Config extends Controller implements IFilter {
     
@@ -181,6 +182,7 @@ public class Config extends Controller implements IFilter {
         }
         
         public static String fullUrl(String url) {
+            if (S.isEmpty(url)) return "//" + Config.domain + "/";
             if (p1.matcher(url).matches() && ! p2().matcher(url).matches()) {
                 return url.replaceFirst("(https?:)?//.*?/", s());
             } else {
