@@ -2,7 +2,7 @@
 # 1.2.1 - _.NPE now support multiple arguments
 #       - UrlResolver now support null arguments so that u can type the following in the view
 #              _urlResolver.fullUrl()
-@       - _.hashCode(int, Object) deprecated, use _.hc(Object...) instead
+#       - _.hashCode(int, Object) deprecated, use _.hc(Object...) instead
 # 1.2a - re-version, add hashCode(Object, int) method to _ class
 # 1.1.1a - bug fix: UADetector.current() return null
 # 1.1.1 - bug fix: Region.names() return the 2 "AU" regions in upper case and lower case
