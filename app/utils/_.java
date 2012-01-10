@@ -23,7 +23,7 @@ public class _ {
      */
     public final static void NPE(Object... args) {
         for (Object o: args) {
-            if (null == args) throw new NullPointerException();
+            if (null == o) throw new NullPointerException();
         }
     }
     
@@ -60,5 +60,5 @@ public class _ {
         }
         return i;
     }
-    
+
 }
