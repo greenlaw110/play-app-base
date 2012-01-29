@@ -11,6 +11,7 @@ import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.Collection;
 import java.util.Iterator;
+import java.util.Random;
 
 import play.exceptions.UnexpectedException;
 import play.libs.Codec;
@@ -264,5 +265,30 @@ public class S {
         int mid= fileName.lastIndexOf(".");
         return fileName.substring(mid+1, fileName.length()); 
     }
+    
+    public static String random(int len) {
+        final char[] chars = {'0', '1', '2', '3', '4',
+                '5', '6', '7', '8', '9', '$', '#', '^', '&', '_',
+                'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j',
+                'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't',
+                'u', 'v', 'w', 'x', 'y', 'z', '~', '!', '@', '*'};
 
+        final int max = chars.length;
+        Random r = new Random();
+        StringBuffer sb = new StringBuffer(len);
+        while(len-- > 0) {
+            int i = r.nextInt(max);
+            sb.append(chars[i]);
+        }
+        return sb.toString();
+    }
+    
+    public static String random() {
+        return random(8);
+    }
+    
+    public static void main(String[] args) {
+        for (int i = 0; i < 10; ++i)
+            System.out.println(random(i + 5));
+    }
 }
