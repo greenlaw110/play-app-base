@@ -1,35 +1,35 @@
 # version history
+# 1.2.2a - drop betterlogs dependency; S.random() now filename safe
+# 1.2.2  - Add random methods to S utility
 # 1.2.1a - Fix _.NPE bug
-# 1.2.1 - _.NPE now support multiple arguments
-#       - UrlResolver now support null arguments so that u can type the following in the view
-#              _urlResolver.fullUrl()
-#       - _.hashCode(int, Object) deprecated, use _.hc(Object...) instead
-# 1.2a - re-version, add hashCode(Object, int) method to _ class
+# 1.2.1  - _.NPE now support multiple arguments
+#        - UrlResolver now support null arguments so that u can type _urlResolver.fullUrl() in the view
+#        - _.hashCode(int, Object) deprecated, use _.hc(Object...) instead
+# 1.2a   - re-version, add hashCode(Object, int) method to _ class
 # 1.1.1a - bug fix: UADetector.current() return null
-# 1.1.1 - bug fix: Region.names() return the 2 "AU" regions in upper case and lower case
+# 1.1.1  - bug fix: Region.names() return the 2 "AU" regions in upper case and lower case
 # 1.1.0a - update Config to resolve config loading timing issue
-# 1.1.0 - Add helper methods to UserAgent to simplify browser identification
-# 1.0.9 - Add UrlResolver utility to Config, for full url creating
-# 1.0.8 - Move AutoConfig to play-config
-# 1.0.7 - Add help methods to FastTag
-# 1.0.6 - Mark Non Trace methods
-# 1.0.5 - AutoConfig feature
-# 1.0.4 - Helper methods in controllers.filters.Config to get configuration
-#         Region string will be lowercase
-#         fileExtension method in S
-#         new filter: AuthentityChecker to do authentity check for POST/PUT/DELETE request
-# 1.0.3 - Rename implicit renderArgs by prefixing with "_" to avoid naming confliction with user apps
-#       - remove context from Config filter, use Play.ctxPath instead, "context" implicit render arg replaced with "_ctxPath"
-# 1.0.2 - Add Region filter set persist region info
-# 1.0.1 - Add FPB_APP to IFilter as the start priority for applications,
-#       - remove "@Inject public static IApplication app;" from UADetector
-# 1.0.0 - intial version
+# 1.1.0  - Add helper methods to UserAgent to simplify browser identification
+# 1.0.9  - Add UrlResolver utility to Config, for full url creating
+# 1.0.8  - Move AutoConfig to play-config
+# 1.0.7  - Add help methods to FastTag
+# 1.0.6  - Mark Non Trace methods
+# 1.0.5  - AutoConfig feature
+# 1.0.4  - Helper methods in controllers.filters.Config to get configuration
+#          Region string will be lowercase
+#          fileExtension method in S
+#          new filter: AuthentityChecker to do authentity check for POST/PUT/DELETE request
+# 1.0.3  - Rename implicit renderArgs by prefixing with "_" to avoid naming confliction with user apps
+#        - remove context from Config filter, use Play.ctxPath instead, "context" implicit render arg replaced with "_ctxPath"
+# 1.0.2  - Add Region filter set persist region info
+# 1.0.1  - Add FPB_APP to IFilter as the start priority for applications,
+#        - remove "@Inject public static IApplication app;" from UADetector
+# 1.0.0  - intial version
 
 # Application dependencies
-self: play -> app-base 1.2.1a
+self: play -> app-base 1.2.2a
 
 require:
-    - play -> betterlogs [1.1,)
     - play -> guice [1.2,)
     - play -> greenscript [1.2.6g,)
 

@@ -1,8 +1,8 @@
 /**
  * S.java
- * 
+ *
  * Defines handy methods for String manipulating
- * 
+ *
  * @version 1.0 greenlaw110@gmail.com - initial version
  */
 package utils;
@@ -15,19 +15,17 @@ import java.util.Random;
 
 import play.exceptions.UnexpectedException;
 import play.libs.Codec;
-import play.modules.betterlogs.NoTrace;
 
-@NoTrace
 public class S {
 
     /**
-     * Define an instance to be used in views 
+     * Define an instance to be used in views
      */
     public final static S instance = new S();
 
     /**
      * Get string representation of an object instance
-     * 
+     *
      * @param o the instance to be displayed
      * @param quoted whether display quotation mark
      */
@@ -37,7 +35,7 @@ public class S {
 
     /**
      * Join a list of object into a string
-     * 
+     *
      * @param separator the symbol used to separate the listed itmes
      * @param list a list of object instances
      * @return a string representation of the listed objects
@@ -48,7 +46,7 @@ public class S {
 
     /**
      * Join a list of object into a string, prefix and suffix will be added if supplied
-     * 
+     *
      * @param separator the symbols used to separate the listed items and prefix and suffix
      * @param prefix the symbols prepended to the beginning of the item list
      * @param suffix the symbols appended to the end of the item list
@@ -62,7 +60,7 @@ public class S {
 
     /**
      * Join a list of object into a string, prefix and suffix will be added if supplied
-     * 
+     *
      * @param separator the symbols used to separate the listed items and prefix and suffix
      * @param prefix the symbols prepended to the beginning of the item list
      * @param suffix the symbols appended to the end of the item list
@@ -98,7 +96,7 @@ public class S {
 
     /**
      * Join an array of strings into a string
-     * 
+     *
      * @param separator the symbol used to separate the listed itmes
      * @param list the array of strings
      * @return a string joined
@@ -117,11 +115,11 @@ public class S {
 
     /**
      * <p>Return a string no longer than specified max length.
-     * 
+     *
      * <p>If the string supplied is longer than the specified max length
      * then only it's part that is less than the max length returned, appended
      * with "..."
-     * 
+     *
      * @param s the original string
      * @param max the maximum length of the result
      * @return
@@ -132,11 +130,11 @@ public class S {
 
     /**
      * <p>Return a string no longer than specified max length.
-     * 
+     *
      * <p>If the string supplied is longer than the specified max length
      * then only it's part that is less than the max length returned, appended
      * with "..."
-     * 
+     *
      * @param s the original string
      * @param max the maximum length of the result
      * @return
@@ -152,7 +150,7 @@ public class S {
 
     /**
      * Decode Base64 encoded string
-     * 
+     *
      * @param str
      * @return decoded string
      */
@@ -167,7 +165,7 @@ public class S {
 
     /**
      * Encode a string using Base64 encoding
-     * 
+     *
      * @param str
      * @return encoded string
      */
@@ -177,7 +175,7 @@ public class S {
 
     /**
      * Determine if a string is all blank or empty or null
-     * 
+     *
      * @param s
      * @return true if the string is null or empty or all blanks
      */
@@ -202,10 +200,10 @@ public class S {
 
     /**
      * Return true if 2 strings are equals to each other as per rule specified
-     * 
+     *
      * @param s1
      * @param s2
-     * @param modifier could be combination of {@link IGNORESPACE} or {@link IGNORECASE}
+     * @param modifier could be combination of {@link #IGNORESPACE} or {@link #IGNORECASE}
      * @return
      */
     public static boolean isEqual(String s1, String s2, int modifier) {
@@ -227,7 +225,7 @@ public class S {
 
     /**
      * perform URL encoding on a giving string
-     * 
+     *
      * @param s
      * @return
      */
@@ -260,18 +258,25 @@ public class S {
             return s;
         }
     }
-    
+
     public static String fileExtension(String fileName) {
         int mid= fileName.lastIndexOf(".");
-        return fileName.substring(mid+1, fileName.length()); 
+        return fileName.substring(mid+1, fileName.length());
     }
-    
+
+    /**
+     * Generate random string.
+     *
+     * The generated string is safe to be used as filename
+     * @param len
+     * @return
+     */
     public static String random(int len) {
         final char[] chars = {'0', '1', '2', '3', '4',
                 '5', '6', '7', '8', '9', '$', '#', '^', '&', '_',
                 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j',
                 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't',
-                'u', 'v', 'w', 'x', 'y', 'z', '~', '!', '@', '*'};
+                'u', 'v', 'w', 'x', 'y', 'z', '~', '!', '@'};
 
         final int max = chars.length;
         Random r = new Random();
@@ -282,11 +287,11 @@ public class S {
         }
         return sb.toString();
     }
-    
+
     public static String random() {
         return random(8);
     }
-    
+
     public static void main(String[] args) {
         for (int i = 0; i < 10; ++i)
             System.out.println(random(i + 5));
