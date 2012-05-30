@@ -1,19 +1,16 @@
 /**
  * L.java
- * 
+ *
  * Defines handy methods for List manipulating
- * 
+ *
  * @version 1.0 greenlaw110@gmail.com - initial version
  */
-package utils;
+package com.greenlaw110.utils;
 
 import java.util.Collection;
 import java.util.Set;
 import java.util.TreeSet;
 
-import play.modules.betterlogs.NoTrace;
-
-@NoTrace
 public class L {
     /**
      * Return true if the object specified can be used in for (T e: o)
@@ -25,7 +22,7 @@ public class L {
 		if (o instanceof Iterable) return true;
 		return false;
 	}
-	
+
 	/**
 	 * Return a unique set from a collection
 	 * @param l

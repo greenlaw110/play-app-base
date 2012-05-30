@@ -1,8 +1,8 @@
 package sys;
 
 import models.User;
-import api.IApplication;
-import api.IUser;
+import com.greenlaw110.play.api.IApplication;
+import com.greenlaw110.play.api.IUser;
 
 public class App implements IApplication {
 

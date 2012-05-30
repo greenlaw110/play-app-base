@@ -1,16 +1,16 @@
-%{
+import com.greenlaw110.utils.ColumnMeta%{
     ( _arg ) &&  ( _cols = _arg);
 
     if(! _cols) {
         throw new play.exceptions.TagInternalException("cols attribute cannot be empty for select tag");
     }
-    
+
     _cols = _cols.split("\\|")
 }%
 <ul class="header row ${_className}">
 #{list items: _cols}
 %{
-  def cm = utils.ColumnMeta.valueOf(_)
+  def cm = ColumnMeta.valueOf(_)
 }%
 <li ${cm.classStr} ${cm.titleStr}>
   <span style="display:block;float:left">${cm.content}</span>

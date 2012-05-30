@@ -1,4 +1,4 @@
-package utils;
+package com.greenlaw110.play.utils;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -11,8 +11,8 @@ import javax.inject.Inject;
 import play.Play;
 import play.jobs.Job;
 import play.jobs.OnApplicationStart;
-import api.IApplication;
-import api.IUser;
+import com.greenlaw110.play.api.IApplication;
+import com.greenlaw110.play.api.IUser;
 
 @OnApplicationStart
 public class FeatureAccess extends Job<Object> {
@@ -29,7 +29,7 @@ public class FeatureAccess extends Job<Object> {
         String[] sa = s.split("[,:\\s]");
         List<String> l = new ArrayList(Arrays.asList(sa));
         map_.put(Role.DEV, Arrays.asList(sa));
-        
+
         // testers
         s = Play.configuration.getProperty(CONF_TESTERS, "");
         sa = s.split("[,;\\s]");
@@ -37,7 +37,7 @@ public class FeatureAccess extends Job<Object> {
         l.addAll(map_.get(Role.DEV)); // developer has all tester privilige
         map_.put(Role.TESTER, l);
     }
-    
+
     @Inject
     static IApplication app = null;
     public static boolean hasAccess(Role role) {

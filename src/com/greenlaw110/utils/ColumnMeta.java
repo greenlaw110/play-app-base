@@ -1,36 +1,33 @@
-package utils;
+package com.greenlaw110.utils;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import play.modules.betterlogs.NoTrace;
-
-@NoTrace
 public class ColumnMeta {
 	public String content;
 	public String className;
 	public String field;
 	public boolean sortable = true;
 	public int max;
-	
+
 	@Override
 	public String toString() {
 		return String.format("%1$s{class:%2$s,max:%3$s}", content, className, max);
 	}
-	
+
 	public String getClassStr() {
 		return String.format("class='%1$s'", className == null ? content.toLowerCase() : className);
 	}
-	
+
 	public String getClassStr(String additional) {
 		if (null == additional || additional.trim().equals("")) return getClassStr();
 		return String.format("class='%1$s %2$s'", className == null ? content.toLowerCase() : className, additional);
 	}
-	
+
 	public String getContent() {
 		return max == 0 ? content : S.maxSize(content, max);
 	}
-	
+
 	public String getTitleStr() {
 		if (max == 0) {
 			return "";
@@ -38,11 +35,11 @@ public class ColumnMeta {
 			return String.format("title=\"%1$s\"", content);
 		}
 	}
-	
+
 	public boolean isSortable() {
 		return sortable;
 	}
-	
+
 	private static final Pattern p_ = Pattern.compile("([\\w\\s_\\-]+)");
 	private static final Pattern pEx_ = Pattern.compile("\\[(.*)\\]");
 	private static final Pattern pCls_ = Pattern.compile("\\bclass:\\s*([\\w\\s_\\-]+)\\b");
@@ -76,7 +73,7 @@ public class ColumnMeta {
 		}
 		return hm;
 	}
-	
+
 	public static void main(String[] args) {
 		String s = "Order Number{class: order-number ibm,max: 5}";
 		System.out.println(ColumnMeta.valueOf(s).getClassStr());

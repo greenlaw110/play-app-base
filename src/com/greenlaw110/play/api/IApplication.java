@@ -1,4 +1,4 @@
-package api;
+package com.greenlaw110.play.api;
 
 
 public interface IApplication {

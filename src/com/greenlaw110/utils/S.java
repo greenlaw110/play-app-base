@@ -5,7 +5,7 @@
  *
  * @version 1.0 greenlaw110@gmail.com - initial version
  */
-package utils;
+package com.greenlaw110.utils;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;

@@ -17,9 +17,9 @@ import play.exceptions.TemplateExecutionException;
 import play.i18n.Messages;
 import play.templates.GroovyTemplate.ExecutableTemplate;
 import play.templates.JavaExtensions;
-import utils.FeatureAccess;
-import utils.FeatureAccess.Role;
-import utils.S;
+import com.greenlaw110.play.utils.FeatureAccess;
+import com.greenlaw110.play.utils.FeatureAccess.Role;
+import com.greenlaw110.utils.S;
 
 @play.templates.FastTags.Namespace("app")
 public class FastTags extends play.templates.FastTags {

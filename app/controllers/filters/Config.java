@@ -1,28 +1,18 @@
 /**
  * Config.java
- * 
+ *
  * Bindings controller provide filters to add miscellaneous variables to RenderArgs
- *  
+ *
  * @version 1.0 greenlaw110@gmail.com - intial version
  */
 
 package controllers.filters;
 
-import java.lang.annotation.Documented;
-import java.lang.annotation.Inherited;
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
-import java.lang.annotation.Target;
-import java.lang.reflect.Field;
-import java.util.List;
 import java.util.Properties;
 import java.util.regex.Pattern;
 
-import javassist.Modifier;
-
 import javax.inject.Inject;
 
-import play.Logger;
 import play.Play;
 import play.exceptions.ConfigurationException;
 import play.jobs.Job;
@@ -31,12 +21,12 @@ import play.modules.betterlogs.NoTrace;
 import play.mvc.Before;
 import play.mvc.Controller;
 import play.mvc.Scope.RenderArgs;
-import api.IApplication;
-import api.IUser;
-import utils.S;
+import com.greenlaw110.play.api.IApplication;
+import com.greenlaw110.play.api.IUser;
+import com.greenlaw110.utils.S;
 
 public class Config extends Controller implements IFilter {
-    
+
     @NoTrace
     public static int getIntConf(String key, int def) {
         String s = Play.configuration.getProperty(key);
@@ -47,7 +37,7 @@ public class Config extends Controller implements IFilter {
             throw new ConfigurationException("error get integer config " + key + ": " + e.getMessage());
         }
     }
-    
+
     @NoTrace
     public static long getLongConf(String key, long def) {
         String s = Play.configuration.getProperty(key);
@@ -58,7 +48,7 @@ public class Config extends Controller implements IFilter {
             throw new ConfigurationException("error get long config " + key + ": " + e.getMessage());
         }
     }
-    
+
     @NoTrace
     public static float getFloatConf(String key, float def) {
         String s = Play.configuration.getProperty(key);
@@ -69,7 +59,7 @@ public class Config extends Controller implements IFilter {
             throw new ConfigurationException("error get float config " + key + ": " + e.getMessage());
         }
     }
-    
+
     @NoTrace
     public static boolean getBoolConf(String key, boolean def) {
         String s = Play.configuration.getProperty(key);
@@ -80,7 +70,7 @@ public class Config extends Controller implements IFilter {
             throw new ConfigurationException("error get boolean config " + key + ": " + e.getMessage());
         }
     }
-    
+
     @NoTrace
     public static String getStringConf(String key, String def) {
         return Play.configuration.getProperty(key, def);
@@ -96,7 +86,7 @@ public class Config extends Controller implements IFilter {
 
     public static boolean debugOn = false;
     public static String developers = null;
-    
+
     @Inject
     public static IApplication app = null;
 
@@ -140,10 +130,10 @@ public class Config extends Controller implements IFilter {
                 developers = Play.configuration.getProperty("app.developers",
                         "");
             }
-            
+
         }
     }
-    
+
     @Before(priority = FPB_CONFIG_10)
     public static void addBindings() {
         RenderArgs r = renderArgs;
@@ -153,10 +143,10 @@ public class Config extends Controller implements IFilter {
         r.put("_homeUrl", homeUrl);
         r.put("_scheme", scheme);
         r.put("_postScheme", postScheme);
-        r.put("_S", utils.S.instance);
+        r.put("_S", S.instance);
         r.put("_urlResolver", UrlResolver.instance);
     }
-    
+
     @Before(priority = FPB_CONFIG_100)
     public static void setDebug() {
         if (!debugOn) return;
@@ -164,11 +154,11 @@ public class Config extends Controller implements IFilter {
         if (null == me) return;
         renderArgs.put("debug", developers.indexOf(me.getId().toString()) != -1);
     }
-    
+
     public static class UrlResolver {
-        
+
         public static UrlResolver instance = new UrlResolver();
-        
+
         private static Pattern p1 = Pattern.compile("(https?:)?//.*");
         private static Pattern p2 = null;
         private static Pattern p2() {
@@ -180,7 +170,7 @@ public class Config extends Controller implements IFilter {
             if (null == s) s = new StringBuilder("//").append(Config.domain).append("/").toString();
             return s;
         }
-        
+
         public static String fullUrl(String url) {
             if (S.isEmpty(url)) return "//" + Config.domain + "/";
             if (p1.matcher(url).matches() && ! p2().matcher(url).matches()) {
@@ -189,7 +179,7 @@ public class Config extends Controller implements IFilter {
                 return "//" + Config.domain + (url.startsWith("/") ? url : "/" + url);
             }
         }
-        
+
         public static void main(String[] sa) {
             Config.domain = "simspets.apps2.pixolut.com";
             String s1 = "https://127.0.0.1:20004/pet/000001";
@@ -197,7 +187,7 @@ public class Config extends Controller implements IFilter {
             String s3 = "//127.0.0.1:20004/pet/000001";
             String s4 = "/pet/000001";
             String s5 = "pet/000001";
-            
+
             String url = "//simspets.apps2.pixolut.com/pet/000001";
             test(s1, url);
             test(s2, url);
@@ -205,7 +195,7 @@ public class Config extends Controller implements IFilter {
             test(s4, url);
             test(s5, url);
         }
-        
+
         public static void test(String url, String result) {
             if (!result.equals(fullUrl(url))) {
                 System.out.println("fail: " + url + ", " + fullUrl(url));
