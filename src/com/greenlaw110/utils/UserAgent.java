@@ -7,11 +7,20 @@ import java.util.regex.Pattern;
 
 public class UserAgent {
 
+    public static enum OS {
+        MAC_OS, IOS, WIN32, WIN64, LINUX, DROID, UNKNOWN
+    }
+    private OS os_ = null;
+    public OS getOS() {
+        return os_;
+    }
+
     public static enum Device {
         IPHONE (0x01),
         IPAD (0x02),
         IPOD (0x04),
-        DROID (0x08);
+        DROID (0x08),
+        UNKNOWN (0x00);
 
         private int id_ = 0;
         private Device (int id) {
@@ -104,26 +113,34 @@ public class UserAgent {
         /*
          * Note the sequence of the enum DOSE matter!
          */
-        IPHONE(Pattern.compile(".*iPhone.*"), Device.IPHONE, null),
-        ANDROID(Pattern.compile(".*Android.*"), Device.DROID, null),
-        IE6(Pattern.compile(".*MSIE\\s+[6]\\.0.*"), null, Browser.IE_6),
-        IE7(Pattern.compile(".*MSIE\\s+[7]\\.0.*"), null, Browser.IE_7),
-        IE8(Pattern.compile(".*MSIE\\s+[8]\\.0.*"), null, Browser.IE_8),
-        IE9(Pattern.compile(".*MSIE\\s+(9)\\.0.*"), null, Browser.IE_9),
-        IE10(Pattern.compile(".*MSIE\\s+(10|11|12)\\.0.*"), null, Browser.IE_10),
-        FIREFOX(Pattern.compile(".*Firefox.*"), null, Browser.FIREFOX),
-        FIREFOX3(Pattern.compile(".*Firefox/3.*"), null, Browser.FIREFOX_3),
-        SAFARI(Pattern.compile(".*Safari.*"), null, Browser.SAFARI),
-        CHROME(Pattern.compile(".*Chrome.*"), null, Browser.CHROME),
-        OPERA(Pattern.compile(".*Opera.*"), null, Browser.OPERA);
+        WIN32(Pattern.compile(".*Windows.*"), null, null, OS.WIN32),
+        WIN64(Pattern.compile(".*(WOW64|Win64).*"), null, null, OS.WIN64),
+        LINUX(Pattern.compile(".*Linux.*"), null, null, OS.LINUX),
+        MAC(Pattern.compile(".*Mac OS.*"), null, null, OS.MAC_OS),
+        IPHONE(Pattern.compile(".*iPhone.*"), Device.IPHONE, null, OS.IOS),
+        IPOD(Pattern.compile(".*iPod.*"), Device.IPOD, null, OS.IOS),
+        IPAD(Pattern.compile(".*iPad.*"), Device.IPAD, null, OS.IOS),
+        ANDROID(Pattern.compile(".*Android.*"), Device.DROID, null, OS.DROID),
+        IE6(Pattern.compile(".*MSIE\\s+[6]\\.0.*"), null, Browser.IE_6, null),
+        IE7(Pattern.compile(".*MSIE\\s+[7]\\.0.*"), null, Browser.IE_7, null),
+        IE8(Pattern.compile(".*MSIE\\s+[8]\\.0.*"), null, Browser.IE_8, null),
+        IE9(Pattern.compile(".*MSIE\\s+(9)\\.0.*"), null, Browser.IE_9, null),
+        IE10(Pattern.compile(".*MSIE\\s+(10|11|12)\\.0.*"), null, Browser.IE_10, null),
+        FIREFOX(Pattern.compile(".*Firefox.*"), null, Browser.FIREFOX, null),
+        FIREFOX3(Pattern.compile(".*Firefox/3.*"), null, Browser.FIREFOX_3, null),
+        SAFARI(Pattern.compile(".*Safari.*"), null, Browser.SAFARI, null),
+        CHROME(Pattern.compile(".*Chrome.*"), null, Browser.CHROME, null),
+        OPERA(Pattern.compile(".*Opera.*"), null, Browser.OPERA, null);
 
         private final Pattern p_;
         private Device d_;
         private Browser b_;
-        P(Pattern pattern, Device device, Browser browser) {
+        private OS o_;
+        P(Pattern pattern, Device device, Browser browser, OS os) {
             p_ = pattern;
             d_ = device;
             b_ = browser;
+            o_ = os;
         }
         boolean matches(String ua) {
             return p_.matcher(ua).matches();
@@ -136,6 +153,10 @@ public class UserAgent {
 
                 if (null != b_) {
                     ua.browser_ = b_;
+                }
+
+                if (null != o_) {
+                    ua.os_ = o_;
                 }
             }
         }
