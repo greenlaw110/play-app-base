@@ -1,4 +1,4 @@
-package com.greenlaw110.play.utils;
+package utils;
 
 import java.util.ArrayList;
 import java.util.Arrays;

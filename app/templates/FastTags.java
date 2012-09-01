@@ -7,19 +7,18 @@
  */
 package templates;
 
+import com.greenlaw110.utils.S;
 import groovy.lang.Closure;
-
-import java.io.PrintWriter;
-import java.util.Map;
-
 import play.exceptions.TagInternalException;
 import play.exceptions.TemplateExecutionException;
 import play.i18n.Messages;
 import play.templates.GroovyTemplate.ExecutableTemplate;
 import play.templates.JavaExtensions;
-import com.greenlaw110.play.utils.FeatureAccess;
-import com.greenlaw110.play.utils.FeatureAccess.Role;
-import com.greenlaw110.utils.S;
+import utils.FeatureAccess;
+import utils.FeatureAccess.Role;
+
+import java.io.PrintWriter;
+import java.util.Map;
 
 @play.templates.FastTags.Namespace("app")
 public class FastTags extends play.templates.FastTags {
