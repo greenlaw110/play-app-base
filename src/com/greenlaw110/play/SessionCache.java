@@ -3,8 +3,6 @@ package com.greenlaw110.play;
 import play.cache.Cache;
 import play.mvc.Scope;
 
-import java.io.Serializable;
-
 /**
  * Provide API to access Cache based on session id
  */
@@ -20,7 +18,7 @@ public class SessionCache {
      * @param key
      * @param val
      */
-    public static void put(String key, Serializable val) {
+    public static void put(String key, Object val) {
         key = k(key);
         Cache.set(key, val);
     }
@@ -32,42 +30,42 @@ public class SessionCache {
      * @param val
      * @param expiration Ex: 10s, 3mn, 8h
      */
-    public static void put(String key, Serializable val, String expiration) {
+    public static void put(String key, Object val, String expiration) {
         key = k(key);
         Cache.set(key, val, expiration);
     }
 
-    public static boolean safePut(String key, Serializable val, String expiration) {
+    public static boolean safePut(String key, Object val, String expiration) {
         key = k(key);
         return Cache.safeSet(key, val, expiration);
     }
 
-    public static void putIfNotExists(String key, Serializable val) {
+    public static void putIfNotExists(String key, Object val) {
         key = k(key);
         Cache.add(key, val);
     }
 
-    public static void putIfNotExists(String key, Serializable val, String expiration) {
+    public static void putIfNotExists(String key, Object val, String expiration) {
         key = k(key);
         Cache.add(key, val, expiration);
     }
 
-    public static boolean safePutIfNotExists(String key, Serializable val, String expiration) {
+    public static boolean safePutIfNotExists(String key, Object val, String expiration) {
         key = k(key);
         return Cache.safeAdd(key, val, expiration);
     }
 
-    public static void putIfExists(String key, Serializable val) {
+    public static void putIfExists(String key, Object val) {
         key = k(key);
         Cache.replace(key, val);
     }
 
-    public static void putIfExists(String key, Serializable val, String expiration) {
+    public static void putIfExists(String key, Object val, String expiration) {
         key = k(key);
         Cache.replace(key, val, expiration);
     }
 
-    public static boolean safePutIfExists(String key, Serializable val, String expiration) {
+    public static boolean safePutIfExists(String key, Object val, String expiration) {
         key = k(key);
         return Cache.safeReplace(key, val, expiration);
     }
@@ -78,9 +76,9 @@ public class SessionCache {
      * @param key
      * @return
      */
-    public static Serializable get(String key) {
+    public static Object get(String key) {
         key = k(key);
-        return (Serializable)Cache.get(key);
+        return (Object)Cache.get(key);
     }
 
     /**

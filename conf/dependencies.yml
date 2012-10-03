@@ -1,4 +1,5 @@
 # version history
+# 1.3.5  - add Auth utilities for Token generation etc
 # 1.3.4  - add SessionCache API, move FeatureAccess from src to app as it needs to be processed by Play
 # 1.3.3  - change IUser.getId() api for play-morphia 1.2.9
 # 1.3.2  - Add more device/os in UserAgent
@@ -33,7 +34,7 @@
 # 1.0.0  - intial version
 
 # Application dependencies
-self: play -> app-base 1.3.3
+self: play -> app-base 1.3.5
 
 require:
     - play -> guice [1.2,)
