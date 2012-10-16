@@ -17,4 +17,14 @@ public class Utils extends PlayPlugin {
             request.remoteAddress = request.headers.get("x-real-ip").value();
         }
     }
+
+    @Override
+    public void beforeInvocation() {
+        if (!JobContext.initialized()) JobContext.init();
+    }
+
+    @Override
+    public void invocationFinally() {
+        JobContext.clear();
+    }
 }
