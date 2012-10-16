@@ -21,6 +21,7 @@ public class Utils extends PlayPlugin {
     @Override
     public void beforeInvocation() {
         if (!JobContext.initialized()) JobContext.init();
+        // else: JobContext initialized because I am in a ContextualJob
     }
 
     @Override

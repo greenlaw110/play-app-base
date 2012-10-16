@@ -7,10 +7,14 @@ import play.jobs.Job;
  */
 public class ContextualJob<V> extends Job<V> {
 
-    private JobContext origin_ = JobContext.fork();
+    /*
+     * This keeps a copy of JobContext of current thread (which is the parent thread)
+     */
+    private JobContext origin_ = JobContext.copy();
 
     @Override
     public boolean init() {
+        // copy the JobContext of parent thread into the current thread
         JobContext.init(origin_);
         return super.init();
     }

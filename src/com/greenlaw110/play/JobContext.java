@@ -19,16 +19,26 @@ public class JobContext {
         return current_.get().bag_;
     }
 
+    /**
+     * Whether JobContext of current thread initialized
+     * @return
+     */
     public static final boolean initialized() {
         return null != current_.get();
     }
 
-    public static final void init() {
+    /**
+     * Init JobContext of current thread
+     */
+    static final void init() {
         clear();
         current_.set(new JobContext());
     }
 
-    public static final void clear() {
+    /**
+     * Clear JobContext of current thread
+     */
+    static final void clear() {
         JobContext ctxt = current_.get();
         if (null != ctxt) {
             ctxt.bag_.clear();
@@ -36,29 +46,57 @@ public class JobContext {
         }
     }
 
+    /**
+     * Get value by key from the JobContext of current thread
+     * @param key
+     * @return
+     */
     public static final Object get(String key) {
         return m().get(key);
     }
 
+    /**
+     * Generic version of getting value by key from the JobContext of current thread
+     * @param key
+     * @return
+     */
     public static final <T> T get(String key, Class<T> clz) {
         return (T)m().get(key);
     }
 
+    /**
+     * Set value by key to the JobContext of current thread
+     * @param key
+     * @return
+     */
     public static final void put(String key, Object val) {
         m().put(key, val);
     }
 
+    /**
+     * Remove value by key from the JobContext of current thread
+     * @param key
+     * @return
+     */
     public static final void remove(String key) {
         m().remove(key);
     }
 
-    public static final JobContext fork() {
+    /**
+     * Make a copy of JobContext of current thread
+     * @return
+     */
+    static final JobContext copy() {
         JobContext ctxt = new JobContext();
         ctxt.bag_.putAll(current_.get().bag_);
         return ctxt;
     }
 
-    public static final void init(JobContext origin) {
+    /**
+     * Initialize current thread's JobContext using specified copy
+     * @param origin
+     */
+    static final void init(JobContext origin) {
         current_.set(origin);
     }
 
