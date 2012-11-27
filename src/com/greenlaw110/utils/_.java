@@ -40,6 +40,12 @@ public class _ {
         return S.str(o, false);
     }
 
+    public final static boolean isEqual(Object a, Object b) {
+        if (a == b) return true;
+        if (null == a) return b != null;
+        else return a.equals(b);
+    }
+
     /**
      * @deprecated use hc(Object... args) instead
      * @param property

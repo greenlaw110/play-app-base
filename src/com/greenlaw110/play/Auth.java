@@ -18,7 +18,13 @@ public class Auth {
 
     public static class Token implements Serializable {
         public String oid;
+        @Deprecated
         public boolean outdated;
+        public boolean expired;
+        void setExpired() {
+            outdated = true;
+            expired = true;
+        }
         public List<String> payload = new ArrayList<String>();
 
         public boolean isEmpty() {
@@ -96,11 +102,11 @@ public class Auth {
         try {
             long due = Long.parseLong(sa[1]);
             if (due <= System.currentTimeMillis()) {
-                tk.outdated = true;
+                tk.setExpired();
                 return tk;
             }
         } catch (Exception e) {
-            tk.outdated = true;
+            tk.setExpired();
             return tk;
         }
         if (sa.length > 2) {

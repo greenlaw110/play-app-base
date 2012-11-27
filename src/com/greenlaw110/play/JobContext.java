@@ -1,8 +1,10 @@
 package com.greenlaw110.play;
 
+import com.greenlaw110.IContextInitializer;
 import play.Invoker;
 
 import java.lang.annotation.Annotation;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -12,6 +14,13 @@ import java.util.Map;
  * from a parent thread to a forked job environment
  */
 public class JobContext {
+
+    private static final List<IContextInitializer> initializers = new ArrayList();
+
+    public static void registerInitializer(IContextInitializer initializer) {
+        if (initialized()) throw new IllegalStateException();
+        initializers.add(initializer);
+    }
 
     private static final ThreadLocal<JobContext> current_ = new ThreadLocal<JobContext>();
 
@@ -33,6 +42,9 @@ public class JobContext {
     static final void init() {
         clear();
         current_.set(new JobContext());
+        for (IContextInitializer i: initializers) {
+            i.initContext();
+        }
     }
 
     /**

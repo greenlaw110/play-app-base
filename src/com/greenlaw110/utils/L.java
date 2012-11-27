@@ -11,6 +11,10 @@ import java.util.Collection;
 import java.util.Set;
 import java.util.TreeSet;
 
+/**
+ * @deprecated
+ * use C instead
+ */
 public class L {
     /**
      * Return true if the object specified can be used in for (T e: o)

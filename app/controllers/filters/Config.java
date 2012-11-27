@@ -171,13 +171,18 @@ public class Config extends Controller implements IFilter {
             return s;
         }
 
-        public static String fullUrl(String url) {
+        public static String fullUrl(String url, boolean includeScheme) {
+            String scheme = includeScheme ? Config.scheme + ":" : "";
             if (S.isEmpty(url)) return "//" + Config.domain + "/";
             if (p1.matcher(url).matches() && ! p2().matcher(url).matches()) {
-                return url.replaceFirst("(https?:)?//.*?/", s());
+                return scheme + url.replaceFirst("(https?:)?//.*?/", s());
             } else {
-                return "//" + Config.domain + (url.startsWith("/") ? url : "/" + url);
+                return scheme + "//" + Config.domain + (url.startsWith("/") ? url : "/" + url);
             }
+        }
+
+        public static String fullUrl(String url) {
+            return fullUrl(url, false);
         }
 
         public static void main(String[] sa) {
