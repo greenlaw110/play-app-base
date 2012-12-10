@@ -174,29 +174,72 @@ public class S {
     }
 
     /**
+     * Use empty(String) instead
+     *
+     * @param s
+     * @return
+     */
+    @Deprecated
+    public static boolean isEmpty(String s) {
+        return (null == s || "".equals(s.trim()));
+    }
+
+    /**
      * Determine if a string is all blank or empty or null
      *
      * @param s
      * @return true if the string is null or empty or all blanks
      */
-    public static boolean isEmpty(String s) {
-        if (null == s || "".equals(s.trim()))
-            return true;
-        return false;
+    public static boolean empty(String s) {
+        return (null == s || "".equals(s.trim()));
     }
 
+    public static boolean isNotEmpty(String s) {
+        return notEmpty(s);
+    }
+
+    public static boolean notEmpty(String s) {
+        return !empty(s);
+    }
+
+    /**
+     * Deprecated, use allEmpty instead
+     *
+     * @param sa
+     * @return
+     */
+    @Deprecated
     public static boolean isAllEmpty(String... sa) {
+        return allEmpty(sa);
+    }
+
+    public static boolean allEmpty(String... sa) {
         for (String s: sa) {
-            if (!isEmpty(s)) return false;
+            if (!empty(s)) return false;
         }
         return true;
     }
 
+    /**
+     * Deprecated, use anyEmpty instead
+     *
+     * @param sa
+     * @return
+     */
+    @Deprecated
     public static boolean isAnyEmpty(String... sa) {
+        return anyEmpty(sa);
+    }
+
+    public static boolean anyEmpty(String... sa) {
         for (String s: sa) {
-            if (isEmpty(s)) return true;
+            if (empty(s)) return true;
         }
         return false;
+    }
+
+    public static boolean noEmpty(String... sa) {
+        return !anyEmpty(sa);
     }
 
     public static final int IGNORECASE = 0x00001000;

@@ -1,4 +1,6 @@
 # version history
+# 1.4.0 - add empty, notEmpty allEmpty, anyEmpty, noEmpty interface to S
+# 1.3.9 - reversion
 # 1.3.8  - add isEqual(Object, Object) to _
 #        - deprecate L class and added C class as replacement, add reverse(List<T>) to C
 #        - add isAllEmpty(String...) and isAnyEmpty(String...) to S
@@ -40,7 +42,7 @@
 # 1.0.0  - intial version
 
 # Application dependencies
-self: play -> app-base 1.3.8
+self: play -> app-base 1.4.0
 
 require:
     - play -> guice [1.2,)
