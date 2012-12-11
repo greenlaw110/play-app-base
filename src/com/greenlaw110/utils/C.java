@@ -11,7 +11,7 @@ public class C {
      * @param o
      * @return
      */
-    public final static boolean isArrayOrIterable(Object o) {
+    public static boolean isArrayOrIterable(Object o) {
         if (o.getClass().isArray()) return true;
         if (o instanceof Iterable) return true;
         return false;
@@ -22,11 +22,15 @@ public class C {
      * @param l
      * @return
      */
-    public final static Set unique(Collection l) {
+    public static Set unique(Collection l) {
         return new TreeSet(l);
     }
 
-    public <T> Iterable<T> reverse(final List<T> l) {
+    public static <T> List<T> unmodifiableList(T... t) {
+        return Collections.unmodifiableList(Arrays.asList(t));
+    }
+
+    public static <T> Iterable<T> reverse(final List<T> l) {
         return new Iterable<T>() {
             @Override
             public Iterator<T> iterator() {
