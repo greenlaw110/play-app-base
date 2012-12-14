@@ -22,11 +22,31 @@ public class C {
      * @param l
      * @return
      */
-    public static Set unique(Collection l) {
-        return new TreeSet(l);
+    public static <T> Set unique(Collection<T> l) {
+        return new TreeSet<T>(l);
     }
 
+    /**
+     * Generate an unmodifiable list from a list of arguments
+     *
+     * For example: List<String> ls = C.unmodifiableList("a", "b", "c");
+     *
+     * @param t
+     * @param <T>
+     * @return
+     */
     public static <T> List<T> unmodifiableList(T... t) {
+        return Collections.unmodifiableList(Arrays.asList(t));
+    }
+
+    /**
+     * Alias of unmodifiableList
+     *
+     * @param t
+     * @param <T>
+     * @return
+     */
+    public static <T> List<T> list(T ... t) {
         return Collections.unmodifiableList(Arrays.asList(t));
     }
 

@@ -46,6 +46,10 @@ public class _ {
         else return a.equals(b);
     }
 
+    public final static boolean isNotEqual(Object a, Object b) {
+        return !isEqual(a, b);
+    }
+
     /**
      * @deprecated use hc(Object... args) instead
      * @param property
