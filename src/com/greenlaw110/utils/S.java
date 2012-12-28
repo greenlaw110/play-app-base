@@ -174,12 +174,10 @@ public class S {
     }
 
     /**
-     * Use empty(String) instead
      *
      * @param s
      * @return
      */
-    @Deprecated
     public static boolean isEmpty(String s) {
         return (null == s || "".equals(s.trim()));
     }
@@ -203,12 +201,10 @@ public class S {
     }
 
     /**
-     * Deprecated, use allEmpty instead
      *
      * @param sa
      * @return
      */
-    @Deprecated
     public static boolean isAllEmpty(String... sa) {
         return allEmpty(sa);
     }
@@ -221,12 +217,10 @@ public class S {
     }
 
     /**
-     * Deprecated, use anyEmpty instead
      *
      * @param sa
      * @return
      */
-    @Deprecated
     public static boolean isAnyEmpty(String... sa) {
         return anyEmpty(sa);
     }
@@ -245,8 +239,45 @@ public class S {
     public static final int IGNORECASE = 0x00001000;
     public static final int IGNORESPACE = 0x00002000;
 
+    public static boolean eq(String s1, String s2) {
+        return equal(s1, s2, 0);
+    }
+
+    public static boolean eq(String s1, String s2, int modifier) {
+        return equal(s1, s2, modifier);
+    }
+
+    public static boolean neq(String s1, String s2) {
+        return !equal(s1, s2);
+    }
+
+    public static boolean neq(String s1, String s2, int modifier) {
+        return !equal(s1, s2, modifier);
+    }
+
     /**
      * Return true if 2 strings are equals to each other
+     * @param s1
+     * @param s2
+     * @return
+     */
+    public static boolean equal(String s1, String s2) {
+        return equal(s1, s2, 0);
+    }
+
+    /**
+     * Return false if 2 strings are equals to each other
+     *
+     * @param s1
+     * @param s2
+     * @return
+     */
+    public static boolean notEqual(String s1, String s2) {
+        return !equal(s1, s2, 0);
+    }
+
+    /**
+     *
      * @param s1
      * @param s2
      * @return
@@ -263,7 +294,7 @@ public class S {
      * @param modifier could be combination of {@link #IGNORESPACE} or {@link #IGNORECASE}
      * @return
      */
-    public static boolean isEqual(String s1, String s2, int modifier) {
+    public static boolean equal(String s1, String s2, int modifier) {
         if (null == s1) {
             return s2 == null;
         }
@@ -278,6 +309,16 @@ public class S {
         } else {
             return s1.equals(s2);
         }
+    }
+
+    /**
+     * @param s1
+     * @param s2
+     * @param modifier
+     * @return
+     */
+    public static boolean isEqual(String s1, String s2, int modifier) {
+        return equal(s1, s2, modifier);
     }
 
     /**

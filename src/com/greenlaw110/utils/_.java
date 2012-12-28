@@ -40,6 +40,22 @@ public class _ {
         return S.str(o, false);
     }
 
+    public final static boolean equal(Object a, Object b) {
+        return isEqual(a, b);
+    }
+
+    public final static boolean eq(Object a, Object b) {
+        return isEqual(a, b);
+    }
+
+    public final static boolean neq(Object a, Object b) {
+        return !isEqual(a, b);
+    }
+
+    public final static boolean notEqual(Object a, Object b) {
+        return !isEqual(a, b);
+    }
+
     public final static boolean isEqual(Object a, Object b) {
         if (a == b) return true;
         if (null == a) return b != null;
