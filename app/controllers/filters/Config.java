@@ -123,6 +123,7 @@ public class Config extends Controller implements IFilter {
                 homePath = homePath.substring(0, homePath.length() - 1);
             homeUrl = Play.configuration.getProperty("app.homeurl",
                     String.format("%s://%s", scheme, homePath));
+            Play.configuration.put("application.baseUrl", homeUrl);
             //errorIfNull_("app.homeurl", homeUrl);
             debugOn = Boolean.parseBoolean(Play.configuration.getProperty(
                     "app.debug", "false"));
@@ -208,6 +209,7 @@ public class Config extends Controller implements IFilter {
                 System.out.println("pass");
             }
         }
+        
     }
-
+    
 }
