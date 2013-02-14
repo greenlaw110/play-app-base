@@ -3,6 +3,7 @@ package controllers.filters;
 import play.mvc.Before;
 import play.mvc.Controller;
 
+@Deprecated
 public class AuthentityChecker extends Controller implements IFilter {
     @Before(priority=FPB_AUTHENTITY)
     public static void check() {

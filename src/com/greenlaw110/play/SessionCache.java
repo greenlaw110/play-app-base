@@ -69,16 +69,16 @@ public class SessionCache {
         key = k(key);
         return Cache.safeReplace(key, val, expiration);
     }
-
+    
     /**
      * Get value from the cache with the key + session id
      *
      * @param key
      * @return
      */
-    public static Object get(String key) {
+    public static <T> T get(String key) {
         key = k(key);
-        return (Object)Cache.get(key);
+        return (T)Cache.get(key);
     }
 
     /**

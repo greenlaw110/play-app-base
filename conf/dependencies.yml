@@ -1,4 +1,6 @@
 # version history
+# 1.4.7 - make SessionCache.get(String) be generic
+# 1.4.6 - Rename AuthentityChecker to AuthenticityChecker
 # 1.4.5 - Update play'application.baseUrl with home.url
 # 1.4.4 - add daysBetween and monthsBetween in D utility class
 # 1.4.3 - add D utility class for Date/Time manipulate
@@ -48,7 +50,7 @@
 # 1.0.0  - intial version
 
 # Application dependencies
-self: play -> app-base 1.4.5
+self: play -> app-base 1.4.7
 
 require:
     - play -> guice [1.2,)
