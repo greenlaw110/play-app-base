@@ -1,17 +1,14 @@
 package controllers.filters;
 
 
+import com.greenlaw110.utils.UserAgent;
 import play.Logger;
-import play.Play;
 import play.classloading.enhancers.ControllersEnhancer.ByPass;
-import play.jobs.Job;
-import play.jobs.OnApplicationStart;
 import play.modules.betterlogs.NoTrace;
 import play.mvc.Before;
 import play.mvc.Controller;
 import play.mvc.Finally;
 import play.mvc.Http.Header;
-import com.greenlaw110.utils.UserAgent;
 import play.mvc.Util;
 
 public class UADetector extends Controller implements IFilter {
@@ -72,22 +69,23 @@ public class UADetector extends Controller implements IFilter {
         if (!isMobile()) notFound();
     }
 
-    // TODO add template path for more devices (BB, Opera mini, Symbian ...)
-    @OnApplicationStart
-    public static class BootLoader extends Job<Object> {
-        @Override
-        public void doJob() {
-            Controller.registerTemplateNameResolver(new ITemplateNameResolver(){
-                @Override
-                public String resolveTemplateName(String templateName) {
-                    if (Boolean.parseBoolean(Play.configuration.getProperty("app.mobileSupport", "false"))) {
-                        return isMobile() ? "mobile/" + templateName : templateName;
-                    } else {
-                        return templateName;
-                    }
-                }
-            });
-        }
-    }
+// REMOVE DEPENDENCY ON GREEN"S PLAY FORK
+//    // TODO add template path for more devices (BB, Opera mini, Symbian ...)
+//    @OnApplicationStart
+//    public static class BootLoader extends Job<Object> {
+//        @Override
+//        public void doJob() {
+//            Controller.registerTemplateNameResolver(new ITemplateNameResolver(){
+//                @Override
+//                public String resolveTemplateName(String templateName) {
+//                    if (Boolean.parseBoolean(Play.configuration.getProperty("app.mobileSupport", "false"))) {
+//                        return isMobile() ? "mobile/" + templateName : templateName;
+//                    } else {
+//                        return templateName;
+//                    }
+//                }
+//            });
+//        }
+//    }
 
 }

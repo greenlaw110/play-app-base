@@ -90,6 +90,14 @@ public class UserAgent {
     public final boolean isOpera() {
         return browser_ == Browser.OPERA;
     }
+    
+    public final boolean isWebKit() {
+        return str_.contains("WebKit");
+    }
+    
+    public final boolean isSafari() {
+        return browser_ == Browser.SAFARI;
+    }
 
     public final boolean isChrome() {
         return browser_ == Browser.CHROME;
