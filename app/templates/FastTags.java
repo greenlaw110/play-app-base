@@ -7,8 +7,8 @@
  */
 package templates;
 
-import com.greenlaw110.utils.S;
 import groovy.lang.Closure;
+import org.osgl.util.S;
 import play.exceptions.TagInternalException;
 import play.exceptions.TemplateExecutionException;
 import play.i18n.Messages;

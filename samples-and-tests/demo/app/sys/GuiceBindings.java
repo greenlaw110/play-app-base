@@ -1,6 +1,6 @@
 package sys;
 
-import com.greenlaw110.play.api.IApplication;
+import org.osgl.play.api.IApplication;
 
 import com.google.inject.AbstractModule;
 

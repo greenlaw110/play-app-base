@@ -7,20 +7,17 @@
  */
 package templates;
 
-import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
-import java.util.SortedSet;
-import java.util.TreeSet;
-
+import org.osgl.util.C;
+import org.osgl.util.S;
 import play.i18n.Messages;
 import play.modules.betterlogs.NoTrace;
-import com.greenlaw110.utils.S;
+
+import java.util.*;
 
 @NoTrace
 public class JavaExtensions extends play.templates.JavaExtensions {
     public static String maxLength(String string, Integer len) {
-        return S.max(string, len);
+        return S.maxLength(string, len);
     }
 
     public static String days(Date date) {
@@ -49,8 +46,20 @@ public class JavaExtensions extends play.templates.JavaExtensions {
         return (lowercase ? string.toLowerCase() : string);
     }
 
-    public static String csv(String string) {
-        return S.csvEncode(string);
+    // ref: http://en.wikipedia.org/wiki/Comma-separated_values
+    public static String csv(String s) {
+        // fields that contain commas, double-quotes, or line-breaks must be
+        // quoted
+        if (s.contains("\"") || s.contains(",") || s.contains("\n")
+                || s.contains("\r")) {
+            // a quote within a field must be escaped with an additional quote
+            // immediately preceding the literal quote.
+            StringBuilder sb = new StringBuilder("\"").append(
+                    s.replace("\"", "\"\"")).append("\"");
+            return sb.toString();
+        } else {
+            return s;
+        }
     }
 
     public static SortedSet sort(Set<? extends Comparable> set) {
@@ -58,11 +67,7 @@ public class JavaExtensions extends play.templates.JavaExtensions {
     }
 
     public static Set unique(Iterable itr) {
-        Set set = new HashSet();
-        for (Object o: itr) {
-            set.add(o);
-        }
-        return set;
+        return C.uniq(itr);
     }
 
 }

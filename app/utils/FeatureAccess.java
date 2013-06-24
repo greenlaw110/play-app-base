@@ -1,18 +1,13 @@
 package utils;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import javax.inject.Inject;
-
+import org.osgl.play.api.IApplication;
+import org.osgl.play.api.IUser;
 import play.Play;
 import play.jobs.Job;
 import play.jobs.OnApplicationStart;
-import com.greenlaw110.play.api.IApplication;
-import com.greenlaw110.play.api.IUser;
+
+import javax.inject.Inject;
+import java.util.*;
 
 @OnApplicationStart
 public class FeatureAccess extends Job<Object> {

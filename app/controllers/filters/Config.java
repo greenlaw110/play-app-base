@@ -8,11 +8,9 @@
 
 package controllers.filters;
 
-import java.util.Properties;
-import java.util.regex.Pattern;
-
-import javax.inject.Inject;
-
+import org.osgl.play.api.IApplication;
+import org.osgl.play.api.IUser;
+import org.osgl.util.S;
 import play.Play;
 import play.exceptions.ConfigurationException;
 import play.jobs.Job;
@@ -21,9 +19,10 @@ import play.modules.betterlogs.NoTrace;
 import play.mvc.Before;
 import play.mvc.Controller;
 import play.mvc.Scope.RenderArgs;
-import com.greenlaw110.play.api.IApplication;
-import com.greenlaw110.play.api.IUser;
-import com.greenlaw110.utils.S;
+
+import javax.inject.Inject;
+import java.util.Properties;
+import java.util.regex.Pattern;
 
 public class Config extends Controller implements IFilter {
 

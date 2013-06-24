@@ -1,7 +1,7 @@
 package controllers.filters;
 
 
-import com.greenlaw110.utils.UserAgent;
+import org.osgl.web.UserAgent;
 import play.Logger;
 import play.classloading.enhancers.ControllersEnhancer.ByPass;
 import play.modules.betterlogs.NoTrace;

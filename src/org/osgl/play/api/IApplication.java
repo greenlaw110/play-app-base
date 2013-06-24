@@ -1,4 +1,4 @@
-package com.greenlaw110.play.api;
+package org.osgl.play.api;
 
 
 public interface IApplication {

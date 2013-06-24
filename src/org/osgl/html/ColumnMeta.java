@@ -1,4 +1,7 @@
-package com.greenlaw110.utils;
+package org.osgl.html;
+
+
+import org.osgl.util.S;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -25,7 +28,7 @@ public class ColumnMeta {
 	}
 
 	public String getContent() {
-		return max == 0 ? content : S.maxSize(content, max);
+		return max == 0 ? content : S.maxLength(content, max);
 	}
 
 	public String getTitleStr() {
