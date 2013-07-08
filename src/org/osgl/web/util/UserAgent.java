@@ -1,4 +1,4 @@
-package org.osgl.web;
+package org.osgl.web.util;
 
 import java.util.HashMap;
 import java.util.Map;

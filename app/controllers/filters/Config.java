@@ -18,6 +18,7 @@ import play.jobs.OnApplicationStart;
 import play.modules.betterlogs.NoTrace;
 import play.mvc.Before;
 import play.mvc.Controller;
+import play.mvc.Http;
 import play.mvc.Scope.RenderArgs;
 
 import javax.inject.Inject;
@@ -173,6 +174,12 @@ public class Config extends Controller implements IFilter {
 
         public static String fullUrl(String url, boolean includeScheme) {
             String scheme = includeScheme ? Config.scheme + ":" : "";
+            if (includeScheme) {
+                Http.Request req = Http.Request.current();
+                if (null != req && req.secure) {
+                    scheme = "https:";
+                }
+            }
             if (S.isEmpty(url)) return "//" + Config.domain + "/";
             if (p1.matcher(url).matches() && ! p2().matcher(url).matches()) {
                 return scheme + url.replaceFirst("(https?:)?//.*?/", s());

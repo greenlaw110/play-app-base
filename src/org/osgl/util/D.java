@@ -31,4 +31,12 @@ public class D {
     public static Date minusMonths(Date date, int month) {
         return plusMonths(date, -1 * month);
     }
+
+    /**
+     * Return the timestamp when today is started
+     * @return
+     */
+    public static long dayStart() {
+        throw E.unsupport();
+    }
 }

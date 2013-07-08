@@ -1,7 +1,7 @@
 package controllers.filters;
 
 
-import org.osgl.web.UserAgent;
+import org.osgl.web.util.UserAgent;
 import play.Logger;
 import play.classloading.enhancers.ControllersEnhancer.ByPass;
 import play.modules.betterlogs.NoTrace;

@@ -1,5 +1,6 @@
 # version history
-# 2.0   - use osgl-java-tool to replace some common utility code
+# 2.0c  - UrlResolver::fullUrl now favor Http.Request.secure setting 
+# 2.0b  - use osgl-java-tool to replace some common utility code
 # 1.5.0 - remove dependencies on Green's play fork 
 # 1.4.8 - add isWebKit() and isSafari() to UserAgent
 # 1.4.7 - make SessionCache.get(String) be generic
@@ -53,7 +54,7 @@
 # 1.0.0  - intial version
 
 # Application dependencies
-self: play -> app-base 2.0
+self: play -> app-base 2.0c
 
 require:
     - play -> guice [1.2,)
