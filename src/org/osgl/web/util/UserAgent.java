@@ -20,6 +20,7 @@ public class UserAgent {
         IPAD,
         IPOD,
         DROID,
+        DROID_TABLET,
         BLACKBERRY,
         SONYERICSSON,
         NOKIA,
@@ -44,6 +45,17 @@ public class UserAgent {
             Device.BLACKBERRY,
             Device.SONYERICSSON,
             Device.NOKIA
+        };
+        for (Device d: da) {
+            if (device_ == d) return true;
+        }
+        return false;
+    }
+    
+    public final boolean isTablet() {
+        final Device[] da = {
+            Device.IPAD,
+            Device.DROID_TABLET
         };
         for (Device d: da) {
             if (device_ == d) return true;
@@ -146,7 +158,8 @@ public class UserAgent {
         IPHONE(Pattern.compile(".*iPhone.*"), Device.IPHONE, Browser.SAFARI, OS.IOS),
         IPAD(Pattern.compile(".*iPad.*"), Device.IPAD, Browser.SAFARI, OS.IOS),
         IPOD(Pattern.compile(".*iPod.*"), Device.IPOD, Browser.SAFARI, OS.IOS),
-        ANDROID(Pattern.compile(".*Android.*"), Device.DROID, null, OS.DROID),
+        DROID_TABLET(Pattern.compile(".*Android.*"), Device.DROID_TABLET, null, OS.DROID),
+        DROID_MOBILE(Pattern.compile(".*Android.*Mobile.*"), Device.DROID, null, OS.DROID),
         BLACKBERRY(Pattern.compile(".*BlackBerry.*"), Device.BLACKBERRY, null, OS.BLACKBERRY),
         SYMBIAN(Pattern.compile(".*Symbian.*", Pattern.CASE_INSENSITIVE), null, null, OS.SYMBIAN),
         SONYERICSSON(Pattern.compile(".*SonyEricsson.*"), Device.SONYERICSSON, null, null),
@@ -225,12 +238,22 @@ public class UserAgent {
 
         s = "Mozilla/5.0 (Linux; U; Android 3.0; en-us; Xoom Build/HRI39) AppleWebKit/534.13 (KHTML, like Gecko) Version/4.0 Safari/534.13";
         ua = set(s);
-        assert_(ua.is(Device.DROID), "2");
+        assert_(ua.is(Device.DROID_TABLET), "2");
         assert_(ua.getBrowser() == Browser.SAFARI, "3");
 
         s = "Mozilla/5.0 (X11; U; Linux x86_64; fr; rv:1.9.2.3) Gecko/20100403 Fedora/3.6.3-4.fc13 Firefox/3.6.3";
         ua = set(s);
         assert_(ua.isFirefox3(), "firefox 3");
+        
+        s = "Mozilla/5.0 (Linux; Android 4.1.1; C1504 Build/11.3.A.0.47) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/28.0.1500.94 Mobile Safari/537.36";
+        ua = set(s);
+        assert_(ua.is(Device.DROID), "droid mobile");
+        assert_(ua.isMobile(), "mobile");
+        
+        s = "Mozilla/5.0 (Linux; Android 4.0.3; GT-P5110 Build/IML74K) AppleWebKit/537.22 (KHTML, like Gecko) Chrome/25.0.1364.123 Safari/537.22";
+        ua = set(s);
+        assert_(ua.is(Device.DROID_TABLET), "droid tablet");
+        assert_(ua.isTablet(), "tablet");
 
         System.out.println("success!");
     }

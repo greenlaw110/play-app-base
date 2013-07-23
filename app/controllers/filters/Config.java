@@ -144,7 +144,6 @@ public class Config extends Controller implements IFilter {
         r.put("_homeUrl", homeUrl);
         r.put("_scheme", scheme);
         r.put("_postScheme", postScheme);
-        r.put("_S", S.instance);
         r.put("_urlResolver", UrlResolver.instance);
     }
 
