@@ -2,6 +2,7 @@ package org.osgl.play;
 
 import org.osgl.util.S;
 import play.Play;
+import play.cache.Cache;
 import play.libs.Crypto;
 
 import java.io.Serializable;
@@ -21,6 +22,7 @@ public class Auth {
         @Deprecated
         public boolean outdated;
         public boolean expired;
+        public long due;
         void setExpired() {
             outdated = true;
             expired = true;
@@ -29,6 +31,14 @@ public class Auth {
 
         public boolean isEmpty() {
             return S.isEmpty(oid);
+        }
+
+        public boolean consumed() {
+            return Cache.get("auth-tk-consumed-" + oid) != null;
+        }
+
+        public void consume() {
+            Cache.add("auth-tk-consumed-" + oid, "true", (due + 1000 - System.currentTimeMillis())/1000 + "s");
         }
     }
 
@@ -57,7 +67,8 @@ public class Auth {
         public long due() {
             long now = System.currentTimeMillis();
             long period = seconds * 1000;
-            return now + (period - now % period);
+            //return now + (period - now % period);
+            return now + period;
         }
     }
 
@@ -101,6 +112,7 @@ public class Auth {
         tk.oid = sa[0];
         try {
             long due = Long.parseLong(sa[1]);
+            tk.due = due;
             if (due <= System.currentTimeMillis()) {
                 tk.setExpired();
                 return tk;

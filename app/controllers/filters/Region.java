@@ -1,9 +1,5 @@
 package controllers.filters;
 
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Set;
-
 import play.Play;
 import play.classloading.enhancers.ControllersEnhancer.ByPass;
 import play.jobs.Job;
@@ -11,6 +7,10 @@ import play.jobs.OnApplicationStart;
 import play.modules.betterlogs.NoTrace;
 import play.mvc.Before;
 import play.mvc.Controller;
+
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
 
 public class Region extends Controller implements IFilter{
     
