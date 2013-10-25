@@ -1,5 +1,5 @@
 # version history
-# 2.0.3 - token is now a function of current timestamp
+# 2.0.4 - fix bug in auth token consume and consumed logic
 # 2.0.2 - add consume() and consumed() interface to Auth.Token
 # 2.0.1 - Detect android tablet from user agent string
 # 2.0c  - UrlResolver::fullUrl now favor Http.Request.secure setting 
@@ -57,7 +57,7 @@
 # 1.0.0  - intial version
 
 # Application dependencies
-self: play -> app-base 2.0.3
+self: play -> app-base 2.0.4
 
 require:
     - play -> guice [1.2,)

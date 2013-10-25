@@ -34,11 +34,11 @@ public class Auth {
         }
 
         public boolean consumed() {
-            return Cache.get("auth-tk-consumed-" + oid) != null;
+            return Cache.get("auth-tk-consumed-" + (oid + due)) != null;
         }
 
         public void consume() {
-            Cache.add("auth-tk-consumed-" + oid, "true", (due + 1000 - System.currentTimeMillis())/1000 + "s");
+            Cache.add("auth-tk-consumed-" + (oid + due), "true", (due + 1000 - System.currentTimeMillis())/1000 + "s");
         }
     }
 
