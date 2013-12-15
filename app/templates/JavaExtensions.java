@@ -67,7 +67,7 @@ public class JavaExtensions extends play.templates.JavaExtensions {
     }
 
     public static Set unique(Iterable itr) {
-        return C.uniq(itr);
+        return C.set(itr);
     }
 
 }

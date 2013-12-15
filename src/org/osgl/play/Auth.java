@@ -91,6 +91,16 @@ public class Auth {
         return Crypto.encryptAES(s);
     }
 
+    public static String generateToken(String privateKey, TokenLife tl, String oid, String... payload) {
+        long due = tl.due();
+        List<String> l = new ArrayList<String>(2 + payload.length);
+        l.add(oid);
+        l.add(String.valueOf(due));
+        l.addAll(Arrays.asList(payload));
+        String s = S.join("|", l);
+        return Crypto.encryptAES(s, privateKey);
+    }
+
     /**
      * Return a list of string. The first item is the oid, rest are the payload
      *
@@ -99,11 +109,19 @@ public class Auth {
      * @return
      */
     public static Token parseToken(String token) {
+        return parseToken(null, token);
+    }
+
+    public static Token parseToken(String privateKey, String token) {
         Token tk = new Token();
         if (S.isEmpty(token)) return tk;
         String s = "";
         try {
-            s = Crypto.decryptAES(token);
+            if (S.notEmpty(privateKey)) {
+                s = Crypto.decryptAES(token, privateKey);
+            } else {
+                s = Crypto.decryptAES(token);
+            }
         } catch (Exception e) {
             return tk;
         }
