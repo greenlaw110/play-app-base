@@ -1,4 +1,5 @@
 # version history
+# 2.1.2 - switch Crypto util from play lib to osgl lib; more options for Auth.TokenLife
 # 2.1.1 - enable use private key to generate and parse token in Auth.java
 # 2.1.0 - update osgl-tool to 0.2-SNAPSHOT
 # 2.04a - tmp version to add markdown4j jar (the mvn version only works on jdk7)
@@ -60,7 +61,7 @@
 # 1.0.0  - intial version
 
 # Application dependencies
-self: play -> app-base 2.1.1
+self: play -> app-base 2.1.2
 
 require:
     - play -> guice [1.2,)
