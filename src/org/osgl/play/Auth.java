@@ -1,9 +1,9 @@
 package org.osgl.play;
 
+import org.osgl.util.Crypto;
 import org.osgl.util.S;
 import play.Play;
 import play.cache.Cache;
-import play.libs.Crypto;
 
 import java.io.Serializable;
 import java.util.*;
@@ -44,17 +44,26 @@ public class Auth {
 
     public static enum TokenLife {
         /**
+         * very short life token that live for only 1 min
+         */
+        ONE_MIN(60),
+        /**
          * short life token live for 1 hour
          */
         SHORT(60 * 60),
+        ONE_HOUR(60 * 60),
         /**
          * Normal life token live for 1 day
          */
         NORMAL(60 * 60 * 24),
+        ONE_DAY(60 * 60 * 24),
+        ONE_WEEK(60 * 60 * 24 * 7),
+        THIRTY_DAYS(60 * 60 * 24 * 30),
         /**
          * Long life token live for 90 days
          */
-        LONG(60 * 60 * 24 * 90);
+        LONG(60 * 60 * 24 * 90),
+        NINETY_DAYS(60 * 60 * 24 * 90);
         private long seconds;
         private TokenLife(long seconds) {
             this.seconds = seconds;
@@ -74,7 +83,7 @@ public class Auth {
 
     public static String generateSecret() {
         String s = UUID.randomUUID().toString();
-        return Crypto.sign(s);
+        return Crypto.sign(s, Play.secretKey.getBytes());
     }
 
     public static String generateToken(String oid, String... payload) {
@@ -88,7 +97,7 @@ public class Auth {
         l.add(String.valueOf(due));
         l.addAll(Arrays.asList(payload));
         String s = S.join("|", l);
-        return Crypto.encryptAES(s);
+        return Crypto.encryptAES(s, Play.secretKey);
     }
 
     public static String generateToken(String privateKey, TokenLife tl, String oid, String... payload) {
@@ -98,6 +107,9 @@ public class Auth {
         l.add(String.valueOf(due));
         l.addAll(Arrays.asList(payload));
         String s = S.join("|", l);
+        if (S.empty(privateKey)) {
+            privateKey = Play.secretKey;
+        }
         return Crypto.encryptAES(s, privateKey);
     }
 
@@ -117,11 +129,10 @@ public class Auth {
         if (S.isEmpty(token)) return tk;
         String s = "";
         try {
-            if (S.notEmpty(privateKey)) {
-                s = Crypto.decryptAES(token, privateKey);
-            } else {
-                s = Crypto.decryptAES(token);
+            if (S.empty(privateKey)) {
+                privateKey = Play.secretKey;
             }
+            s = Crypto.decryptAES(token, privateKey);
         } catch (Exception e) {
             return tk;
         }
@@ -147,9 +158,14 @@ public class Auth {
     }
 
     public static boolean isTokenValid(String oid, String token) {
+        return isTokenValid(Play.secretKey, oid, token);
+    }
+
+    public static boolean isTokenValid(String privateKey, String oid, String token) {
         if (S.isEmpty(oid)) return false;
         if (S.isEmpty(token)) return false;
-        String s = Crypto.decryptAES(token);
+        if (S.empty(privateKey)) privateKey = Play.secretKey;
+        String s = Crypto.decryptAES(token, privateKey);
         String[] sa = s.split("\\|");
         if (sa.length < 2) return false;
         if (!S.isEqual(oid, sa[0])) return false;
