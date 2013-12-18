@@ -1,5 +1,6 @@
 package org.osgl.play;
 
+import org.osgl._;
 import org.osgl.util.Crypto;
 import org.osgl.util.S;
 import play.Play;
@@ -39,6 +40,26 @@ public class Auth {
 
         public void consume() {
             Cache.add("auth-tk-consumed-" + (oid + due), "true", (due + 1000 - System.currentTimeMillis())/1000 + "s");
+        }
+
+        @Override
+        public int hashCode() {
+            return _.hc(oid, due, payload);
+        }
+
+        @Override
+        public boolean equals(Object obj) {
+            if (obj == this) return true;
+            if (obj instanceof Token) {
+                Token that = (Token)obj;
+                return S.eq(that.oid, this.oid) && that.due == this.due && _.eq(that.payload, this.payload);
+            }
+            return false;
+        }
+
+        @Override
+        public String toString() {
+            return S.fmt("{oid: %s, expired: %s, due: %s, payload: %s", oid, expired, due, payload);
         }
     }
 
